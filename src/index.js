@@ -15,6 +15,9 @@ function App() {
       <div className="container">
         <button onClick={() => setCount()}>Нажми на меня</button>
         <button onClick={() => clearCount()}>очистить счетчик</button>
+        <button>Режим редактирования</button>
+        <button>Удалить</button>
+        <button>Сохранить</button>
         <ReactTable />
       </div>
     </div>
