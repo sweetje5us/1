@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { useState } from "react";
 import ReactTable from "./ReactTable/ReactTable";
+import { setEditTable } from "./ReactTable/ReactTable";
 import { SocialSentimentDissatisfied } from "material-ui/svg-icons";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
@@ -22,11 +23,12 @@ function App() {
           checked={false}
           onlabel="On"
           offlabel="Off"
-          onChange={(checked: boolean) => {}}
+          // onChange={(checked: boolean) => setEditTable()}
           width={50}
         />
         <button>Удалить</button>
-        <button>Сохранить</button>
+        <button onClick={() => saveData()}>Сохранить</button>
+
         <ReactTable />
       </div>
     </div>
@@ -45,8 +47,24 @@ function clearCount() {
   // Объявление новой переменной состояния «count»
   localStorage.setItem("count-rows", "0");
 }
-function setEditTable() {
-  setState(!setState);
+function saveData() {
+  localStorage.setItem(
+    "items",
+    JSON.stringify([
+      {
+        name: "BAC",
+        surname: "dsad",
+        lastname: "dsad",
+        position: "director",
+        bdate: "05-02-1993",
+        sex: "male",
+        fdate: "01-12-2021",
+        hdate: "02/12/2021",
+        drive_l: "yes"
+      }
+    ])
+  );
 }
+render(<App />, document.getElementById("root"));
 
 render(<App />, document.getElementById("root"));

@@ -37,26 +37,31 @@ const columns = [
   {
     dataField: "fdate",
     text: "FDate",
-    sort: true,
-    validator: (newValue, row, column) => {
-      if (isNaN(newValue)) {
-        return {
-          valid: false,
-          message: "Price should be numeric"
-        };
-      }
-      if (newValue > 5) {
-        return {
-          valid: false,
-          message: "Price should less than 6"
-        };
-      }
-      return true;
-    }
+    sort: true
+    // validator: (newValue, row, column) => {
+    //   if (isNaN(newValue)) {
+    //     return {
+    //       valid: false,
+    //       message: "Price should be numeric"
+    //     };
+    //   }
+    //   if (newValue > 5) {
+    //     return {
+    //       valid: false,
+    //       message: "Price should less than 6"
+    //     };
+    //   }
+    //   return true;
+    // }
   },
   {
     dataField: "hdate",
     text: "Hdate",
+    sort: true
+  },
+  {
+    dataField: "drive_l",
+    text: "Driver Licence",
     sort: true
   },
   {
@@ -73,15 +78,19 @@ const defaultSorted = [
   }
 ];
 
+function setEditTable() {}
+
 export default class Table extends React.Component {
   render() {
     return (
       <BootstrapTable
         bootstrap4
         keyField="id"
-        data={data}
+        data={JSON.parse(localStorage.getItem("items"))}
         columns={columns}
         defaultSorted={defaultSorted}
+        cellEdit={cellEditFactory({ mode: "click" })}
+        selectableRows={true}
       />
     );
   }
