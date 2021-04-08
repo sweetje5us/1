@@ -88,7 +88,7 @@ const selectRowProp = {
   unselectable: [2],
   selected: [1],
   // onSelect: onSelectRow,
-  bgColor: "gold"
+  bgColor: "red"
 };
 export default class Table extends React.Component {
   render() {
@@ -101,7 +101,7 @@ export default class Table extends React.Component {
         //
         columns={columns}
         defaultSorted={defaultSorted}
-        cellEdit={cellEditFactory({ mode: "click" })}
+        // cellEdit={cellEditFactory({ mode: "click" })} - редактирование элемента таблицы
         selectableRows={true}
       />
     );
