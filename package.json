@@ -1,0 +1,23 @@
+{
+  "name": "react-bootstrap-table-forked",
+  "description": "test-react-table",
+  "version": "0.0.0",
+  "dependencies": {
+    "material-ui": "0.20.0",
+    "react": "16.3.1",
+    "react-bootstrap-table": "4.3.1",
+    "react-bootstrap-table-next": "4.0.3",
+    "react-bootstrap-table2-editor": "1.2.0",
+    "react-contenteditable": "3.3.5",
+    "react-dom": "16.5.2"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
