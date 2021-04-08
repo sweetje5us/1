@@ -7,7 +7,10 @@ const columns = [
   {
     dataField: "name",
     text: "Name",
-    sort: true
+    sort: true,
+    Cell: ({ original }) => {
+      return (
+        <input type="checkbox"></input>)}
   },
   {
     dataField: "surname",
@@ -63,11 +66,6 @@ const columns = [
     dataField: "drive_l",
     text: "Driver Licence",
     sort: true
-  },
-  {
-    dataField: "drive_l",
-    text: "Driver Licence",
-    sort: true
   }
 ];
 
@@ -77,8 +75,6 @@ const defaultSorted = [
     order: "desc"
   }
 ];
-
-function setEditTable() {}
 
 export default class Table extends React.Component {
   render() {
