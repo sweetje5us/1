@@ -2,6 +2,8 @@ import React from "react";
 import { render } from "react-dom";
 import { useState } from "react";
 import ReactTable from "./ReactTable/ReactTable";
+import { SocialSentimentDissatisfied } from "material-ui/svg-icons";
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -15,7 +17,14 @@ function App() {
       <div className="container">
         <button onClick={() => setCount()}>Нажми на меня</button>
         <button onClick={() => clearCount()}>очистить счетчик</button>
-        <button>Режим редактирования</button>
+        <label>Режим редактирования</label>
+        <BootstrapSwitchButton
+          checked={false}
+          onlabel="On"
+          offlabel="Off"
+          onChange={(checked: boolean) => {}}
+          width={50}
+        />
         <button>Удалить</button>
         <button>Сохранить</button>
         <ReactTable />
@@ -35,6 +44,9 @@ function setCount() {
 function clearCount() {
   // Объявление новой переменной состояния «count»
   localStorage.setItem("count-rows", "0");
+}
+function setEditTable() {
+  setState(!setState);
 }
 
 render(<App />, document.getElementById("root"));

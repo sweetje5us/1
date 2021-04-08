@@ -82,10 +82,6 @@ export default class Table extends React.Component {
         data={data}
         columns={columns}
         defaultSorted={defaultSorted}
-        cellEdit={cellEditFactory({
-          mode: "click",
-          blurToSave: true
-        })}
       />
     );
   }
