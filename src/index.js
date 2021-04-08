@@ -1,15 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
-import { useState } from "react";
 import ReactTable from "./ReactTable/ReactTable";
-import { setEditTable } from "./ReactTable/ReactTable";
-import { SocialSentimentDissatisfied } from "material-ui/svg-icons";
-import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 function App() {
   return (
@@ -52,6 +45,19 @@ function saveData() {
     "items",
     JSON.stringify([
       {
+        id: "1",
+        name: "BAC",
+        surname: "dsad",
+        lastname: "dsad",
+        position: "director",
+        bdate: "05-02-1993",
+        sex: "male",
+        fdate: "01-12-2021",
+        hdate: "02/12/2021",
+        drive_l: "yes"
+      },
+      {
+        id: "2",
         name: "BAC",
         surname: "dsad",
         lastname: "dsad",

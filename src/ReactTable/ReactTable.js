@@ -1,17 +1,22 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
-import { data } from "../data.js";
+// import { data } from "../data.js";
 
 const columns = [
   {
-    dataField: "name",
-    text: "Name",
+    dataField: "id",
+    text: "id",
     sort: true,
     isKey: true,
     Cell: ({ original }) => {
       return <input type="checkbox"></input>;
     }
+  },
+  {
+    dataField: "name",
+    text: "Name",
+    sort: true
   },
   {
     dataField: "surname",
