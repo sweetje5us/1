@@ -77,7 +77,7 @@ const columns = [
 
 const defaultSorted = [
   {
-    dataField: "name",
+    dataField: "id",
     order: "desc"
   }
 ];
