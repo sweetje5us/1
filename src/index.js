@@ -14,10 +14,31 @@ import { useTable } from "react-table";
 class App extends Component {
   state = {
     modalIsOpen: false,
-    secondModalIsOpen: false,
-    toggledClearRows: false
+    secondModalIsOpen: false
   };
+  constructor(props) {
+    super(props);
+    this.state = { value: "", value2: "" };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value2
+    }));
+  }
+  handleChange2(event) {
+    this.setState({ ...this.state, value2: event.target.value2 });
+  }
+
+  handleSubmit(event) {
+    alert("{ name: " + this.state.value + ", surname: " + this.state.value2);
+
+    event.preventDefault();
+  }
   openModal = () => {
     this.setState({ modalIsOpen: true });
   };
@@ -97,14 +118,26 @@ class App extends Component {
             onRequestClose={this.closeSecondModal}
           >
             <div>Режим добавления записи</div>
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicName">
                 <Form.Label>Имя</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                  name="name"
+                  type="text"
+                  // required="true"
+                  type="text"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicSurName">
                 <Form.Label>Фамилия</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                  name="surname"
+                  type="text"
+                  value={this.state.value2}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicLastName">
                 <Form.Label>Отчество</Form.Label>
@@ -133,30 +166,33 @@ class App extends Component {
               <Form.Group controlId="formBasicDriverLicence">
                 <Form.Check type="checkbox" label="Driver Licence" />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" onClick={() => addRow()}>
                 Добавить
               </Button>
               <Button onClick={this.closeSecondModal}>Закрыть</Button>
             </Form>
           </Modal>
-          <Button onClick={(e) => this.delete(this.state.posts)}>
-            Удалить
-          </Button>
+          <Button>Удалить</Button>
           <ReactTable columns={this.state.columns} data={this.state.posts} />
         </div>
       </div>
     );
   }
 }
-var count_rows = "";
+var count_rows;
 var stroke;
+
+function addRow() {}
+
 function removestrokeitems() {
   // Объявление новой переменной состояния «count»
   localStorage.removeItem("count_rows");
+  stroke = "";
 }
 function consolelogitems() {
   // Объявление новой переменной состояния «count»
-  stroke = localStorage.getItem("items");
+
+  stroke = stroke + localStorage.getItem("items");
   localStorage.setItem("count-rows", stroke);
   console.log(stroke);
   console.log(count_rows);

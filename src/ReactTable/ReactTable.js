@@ -5,11 +5,6 @@ import cellEditFactory from "react-bootstrap-table2-editor";
 import Datetime from "react-datetime";
 // import { data } from "../data.js";
 
-const handleChange = (state) => {
-  // You can use setState or dispatch with something like Redux so we can use the retrieved data
-  console.log("Selected Rows: ", state.selectedRows);
-};
-
 const columns = [
   {
     dataField: "id",
@@ -120,7 +115,6 @@ export default class Table extends React.Component {
         selectableRows
         // Pass the function only
         selectableRowsComponentProps={{ inkDisabled: true }} // optionally, pass Material Ui supported props down to our custom checkbox
-        onSelectedRowsChange={handleChange}
       />
     );
   }
