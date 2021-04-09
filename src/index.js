@@ -19,6 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       name: "",
       surname: "",
       lastname: "",
@@ -31,6 +32,8 @@ class App extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -40,28 +43,42 @@ class App extends Component {
       [event.target.name]: event.target.value
     }));
   }
+  handleChangeCheckbox(event) {
+    this.setState((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.checked
+    }));
+  }
 
   handleSubmit(event) {
-    alert(
-      "{ name: " +
-        this.state.name +
-        ", surname: " +
-        this.state.surname +
-        ", lastname: " +
-        this.state.lastname +
-        ", position: " +
-        this.state.position +
-        ", bdate: " +
-        this.state.bdate +
-        ", sex: " +
-        this.state.sex +
-        ", fdate: " +
-        this.state.fdate +
-        ", hdate: " +
-        this.state.hdate +
-        ", drive_l: " +
-        Boolean(this.state.drive_l)
-    );
+    let stroke =
+      `,{ "name": "` +
+      this.state.name +
+      `", "surname": "` +
+      this.state.surname +
+      `", "lastname": "` +
+      this.state.lastname +
+      `", "position": "` +
+      this.state.position +
+      `", "bdate": "` +
+      this.state.bdate +
+      `", "sex": "` +
+      this.state.sex +
+      `", "fdate": "` +
+      this.state.fdate +
+      `", "hdate": "` +
+      this.state.hdate +
+      `", "drive_l": "` +
+      Boolean(this.state.drive_l) +
+      `"}]`;
+    stroke =
+      localStorage
+        .getItem("items")
+        .substring(0, localStorage.getItem("items").length - 1) + stroke;
+    localStorage.setItem("items", stroke);
+
+    console.log(stroke);
+    console.log(items);
   }
   openModal = () => {
     this.setState({ modalIsOpen: true });
@@ -79,7 +96,7 @@ class App extends Component {
   };
 
   render() {
-    randomData();
+    //randomData();
 
     return (
       <div className="App">
@@ -224,7 +241,7 @@ class App extends Component {
                   name="drive_l"
                   label="Driver Licence"
                   checked={this.state.drive_l}
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeCheckbox}
                 />
               </Form.Group>
               <Button variant="primary" type="submit">
