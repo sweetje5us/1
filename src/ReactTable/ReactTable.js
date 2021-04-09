@@ -1,7 +1,14 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
+
+import Datetime from "react-datetime";
 // import { data } from "../data.js";
+
+const handleChange = (state) => {
+  // You can use setState or dispatch with something like Redux so we can use the retrieved data
+  console.log("Selected Rows: ", state.selectedRows);
+};
 
 const columns = [
   {
@@ -36,7 +43,8 @@ const columns = [
   {
     dataField: "bdate",
     text: "Birth Date",
-    sort: true
+    sort: true,
+    value: Date
   },
   {
     dataField: "sex",
@@ -107,7 +115,12 @@ export default class Table extends React.Component {
         columns={columns}
         defaultSorted={defaultSorted}
         // cellEdit={cellEditFactory({ mode: "click" })} - редактирование элемента таблицы
-        selectableRows={true}
+        selectableRows // add for checkbox selection
+        Clicked
+        selectableRows
+        // Pass the function only
+        selectableRowsComponentProps={{ inkDisabled: true }} // optionally, pass Material Ui supported props down to our custom checkbox
+        onSelectedRowsChange={handleChange}
       />
     );
   }

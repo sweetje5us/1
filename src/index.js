@@ -7,10 +7,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
+import "react-datepicker/dist/react-datepicker.css";
+import BootstrapTable from "react-bootstrap-table-next";
+import { useTable } from "react-table";
+
 class App extends Component {
   state = {
     modalIsOpen: false,
-    secondModalIsOpen: false
+    secondModalIsOpen: false,
+    toggledClearRows: false
   };
 
   openModal = () => {
@@ -29,54 +34,134 @@ class App extends Component {
   };
 
   render() {
+    randomData();
     return (
       <div className="App">
         <h1>Hello CodeSandbox</h1>
         <div className="container">
-          <Button onClick={() => setCount()}>Нажми на меня</Button>
-          <Button onClick={() => clearCount()}>очистить счетчик</Button>
-          <Button onClick={this.openModal}>Редактировать</Button>
+          <Button onClick={() => consolelogitems()}>Нажми на меня</Button>
+          <Button onClick={() => removestrokeitems()}>очистить счетчик</Button>
+          <Button onClick={() => saveData()}>Сохранить</Button>
           <Button onClick={this.openSecondModal}>Добавить запись</Button>
+          <Button onClick={this.openModal}>Редактировать</Button>
+
           <Modal
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
           >
             <div>Режим редактирования записи</div>
-            <Form></Form>
-            <Button onClick={this.closeModal}>close</Button>
+            <Form>
+              <Form.Group controlId="formBasicName">
+                <Form.Label>Имя</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicSurName">
+                <Form.Label>Фамилия</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicLastName">
+                <Form.Label>Отчество</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicPosition">
+                <Form.Label>Должность</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicBirthDate">
+                <Form.Label>Дата рождения</Form.Label>
+                <Form.Control type="date" />
+              </Form.Group>
+              <Form.Group controlId="formBasicSex">
+                <Form.Label>Пол</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicFDate">
+                <Form.Label>Дата приема на работу</Form.Label>
+                <Form.Control type="date" />
+              </Form.Group>
+              <Form.Group controlId="formBasicHDate">
+                <Form.Label>Дата увольнения</Form.Label>
+                <Form.Control type="date" />
+              </Form.Group>
+              <Form.Group controlId="formBasicDriverLicence">
+                <Form.Check type="checkbox" label="Driver Licence" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+              <Button onClick={this.closeModal}>Закрыть</Button>
+            </Form>
           </Modal>
           <Modal
             isOpen={this.state.secondModalIsOpen}
             onRequestClose={this.closeSecondModal}
           >
             <div>Режим добавления записи</div>
-            <Button onClick={this.closeSecondModal}>close</Button>
-            
+            <Form>
+              <Form.Group controlId="formBasicName">
+                <Form.Label>Имя</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicSurName">
+                <Form.Label>Фамилия</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicLastName">
+                <Form.Label>Отчество</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicPosition">
+                <Form.Label>Должность</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicBirthDate">
+                <Form.Label>Дата рождения</Form.Label>
+                <Form.Control type="date" />
+              </Form.Group>
+              <Form.Group controlId="formBasicSex">
+                <Form.Label>Пол</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
+              <Form.Group controlId="formBasicFDate">
+                <Form.Label>Дата приема на работу</Form.Label>
+                <Form.Control type="date" />
+              </Form.Group>
+              <Form.Group controlId="formBasicHDate">
+                <Form.Label>Дата увольнения</Form.Label>
+                <Form.Control type="date" />
+              </Form.Group>
+              <Form.Group controlId="formBasicDriverLicence">
+                <Form.Check type="checkbox" label="Driver Licence" />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Добавить
+              </Button>
+              <Button onClick={this.closeSecondModal}>Закрыть</Button>
+            </Form>
           </Modal>
-          <Button>Удалить</Button>
-          <Button onClick={() => saveData()}>Сохранить</Button>
-
-          <ReactTable />
+          <Button onClick={(e) => this.delete(this.state.posts)}>
+            Удалить
+          </Button>
+          <ReactTable columns={this.state.columns} data={this.state.posts} />
         </div>
       </div>
     );
   }
 }
-
-var count_rows = 0;
-
-function setCount() {
+var count_rows = "";
+var stroke;
+function removestrokeitems() {
   // Объявление новой переменной состояния «count»
-  count_rows = Number(localStorage.getItem("count-rows"));
-  count_rows = count_rows + 1;
-  localStorage.setItem("count-rows", count_rows);
-  return alert("Вы кликнули " + count_rows + " раз(а)");
+  localStorage.removeItem("count_rows");
 }
-function clearCount() {
+function consolelogitems() {
   // Объявление новой переменной состояния «count»
-  localStorage.setItem("count-rows", "0");
+  stroke = localStorage.getItem("items");
+  localStorage.setItem("count-rows", stroke);
+  console.log(stroke);
+  console.log(count_rows);
 }
-function saveData() {
+function randomData() {
   localStorage.setItem(
     "items",
     JSON.stringify([
@@ -86,10 +171,10 @@ function saveData() {
         surname: "zsasd",
         lastname: "asd",
         position: "director2",
-        bdate: "01-02-1993",
+        bdate: "08.04.2021",
         sex: "male",
-        fdate: "01-12-2021",
-        hdate: "02/12/2021",
+        fdate: "08.04.2021",
+        hdate: "08.04.2021",
         drive_l: "no"
       },
       {
@@ -98,16 +183,14 @@ function saveData() {
         surname: "dsad",
         lastname: "dsad",
         position: "director",
-        bdate: "05-02-1993",
+        bdate: "08.04.2021",
         sex: "male",
-        fdate: "01-12-2021",
-        hdate: "02/12/2021",
+        fdate: "08.04.2021",
+        hdate: "08.04.2021",
         drive_l: "yes"
       }
     ])
   );
 }
-
-render(<App />, document.getElementById("root"));
 
 render(<App />, document.getElementById("root"));
