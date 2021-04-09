@@ -18,7 +18,17 @@ class App extends Component {
   };
   constructor(props) {
     super(props);
-    this.state = { value: "", value2: "" };
+    this.state = {
+      name: "",
+      surname: "",
+      lastname: "",
+      position: "",
+      bdate: "",
+      sex: "",
+      fdate: "",
+      hdate: "",
+      drive_l: ""
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,17 +37,31 @@ class App extends Component {
   handleChange(event) {
     this.setState((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value2
+      [event.target.name]: event.target.value
     }));
-  }
-  handleChange2(event) {
-    this.setState({ ...this.state, value2: event.target.value2 });
   }
 
   handleSubmit(event) {
-    alert("{ name: " + this.state.value + ", surname: " + this.state.value2);
-
-    event.preventDefault();
+    alert(
+      "{ name: " +
+        this.state.name +
+        ", surname: " +
+        this.state.surname +
+        ", lastname: " +
+        this.state.lastname +
+        ", position: " +
+        this.state.position +
+        ", bdate: " +
+        this.state.bdate +
+        ", sex: " +
+        this.state.sex +
+        ", fdate: " +
+        this.state.fdate +
+        ", hdate: " +
+        this.state.hdate +
+        ", drive_l: " +
+        Boolean(this.state.drive_l)
+    );
   }
   openModal = () => {
     this.setState({ modalIsOpen: true });
@@ -56,6 +80,7 @@ class App extends Component {
 
   render() {
     randomData();
+
     return (
       <div className="App">
         <h1>Hello CodeSandbox</h1>
@@ -82,7 +107,7 @@ class App extends Component {
               </Form.Group>
               <Form.Group controlId="formBasicLastName">
                 <Form.Label>Отчество</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control />
               </Form.Group>
               <Form.Group controlId="formBasicPosition">
                 <Form.Label>Должность</Form.Label>
@@ -126,7 +151,7 @@ class App extends Component {
                   type="text"
                   // required="true"
                   type="text"
-                  value={this.state.value}
+                  value={this.state.name}
                   onChange={this.handleChange}
                 />
               </Form.Group>
@@ -135,38 +160,74 @@ class App extends Component {
                 <Form.Control
                   name="surname"
                   type="text"
-                  value={this.state.value2}
+                  value={this.state.surname}
                   onChange={this.handleChange}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicLastName">
                 <Form.Label>Отчество</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                  type="text"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicPosition">
                 <Form.Label>Должность</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                  type="text"
+                  name="position"
+                  value={this.state.position}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicBirthDate">
                 <Form.Label>Дата рождения</Form.Label>
-                <Form.Control type="date" />
+                <Form.Control
+                  name="bdate"
+                  type="date"
+                  value={this.state.bdate}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicSex">
                 <Form.Label>Пол</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                  type="text"
+                  name="sex"
+                  value={this.state.sex}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicFDate">
                 <Form.Label>Дата приема на работу</Form.Label>
-                <Form.Control type="date" />
+                <Form.Control
+                  type="date"
+                  name="fdate"
+                  value={this.state.fdate}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicHDate">
                 <Form.Label>Дата увольнения</Form.Label>
-                <Form.Control type="date" />
+                <Form.Control
+                  type="date"
+                  name="hdate"
+                  value={this.state.hdate}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="formBasicDriverLicence">
-                <Form.Check type="checkbox" label="Driver Licence" />
+                <Form.Check
+                  type="checkbox"
+                  name="drive_l"
+                  label="Driver Licence"
+                  checked={this.state.drive_l}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
-              <Button variant="primary" type="submit" onClick={() => addRow()}>
+              <Button variant="primary" type="submit">
                 Добавить
               </Button>
               <Button onClick={this.closeSecondModal}>Закрыть</Button>
@@ -181,8 +242,6 @@ class App extends Component {
 }
 var count_rows;
 var stroke;
-
-function addRow() {}
 
 function removestrokeitems() {
   // Объявление новой переменной состояния «count»
