@@ -51,35 +51,26 @@ class App extends Component {
   }
 
   handleSubmit(event) {
-    let stroke =
-      `,{ "name": "` +
-      this.state.name +
-      `", "surname": "` +
-      this.state.surname +
-      `", "lastname": "` +
-      this.state.lastname +
-      `", "position": "` +
-      this.state.position +
-      `", "bdate": "` +
-      this.state.bdate +
-      `", "sex": "` +
-      this.state.sex +
-      `", "fdate": "` +
-      this.state.fdate +
-      `", "hdate": "` +
-      this.state.hdate +
-      `", "drive_l": "` +
-      Boolean(this.state.drive_l) +
-      `"}]`;
+    let rowArray = {
+      id: getNewId(),
+      name: this.state.name,
+      surname: this.state.surname,
+      lastname: this.state.lastname,
+      position: this.state.position,
+      bdate: this.state.bdate,
+      sex: this.state.sex,
+      fdate: this.state.fdate,
+      hdate: this.state.hdate,
+      drive_l: Boolean(this.state.drive_l)
+    };
+    let stroke = `,` + JSON.stringify(rowArray) + `]`;
     stroke =
       localStorage
         .getItem("items")
         .substring(0, localStorage.getItem("items").length - 1) + stroke;
     localStorage.setItem("items", stroke);
-
-    console.log(stroke);
-    console.log(items);
   }
+
   openModal = () => {
     this.setState({ modalIsOpen: true });
   };
@@ -93,6 +84,9 @@ class App extends Component {
 
   closeSecondModal = () => {
     this.setState({ secondModalIsOpen: false });
+  };
+  deleteSelected = () => {
+    console.log(JSON.stringify(tableQ.selectRow));
   };
 
   render() {
@@ -111,6 +105,7 @@ class App extends Component {
           <Modal
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
+            ariaHideApp={false}
           >
             <div>Режим редактирования записи</div>
             <Form>
@@ -158,6 +153,7 @@ class App extends Component {
           <Modal
             isOpen={this.state.secondModalIsOpen}
             onRequestClose={this.closeSecondModal}
+            ariaHideApp={false}
           >
             <div>Режим добавления записи</div>
             <Form onSubmit={this.handleSubmit}>
@@ -250,8 +246,8 @@ class App extends Component {
               <Button onClick={this.closeSecondModal}>Закрыть</Button>
             </Form>
           </Modal>
-          <Button>Удалить</Button>
-          <ReactTable columns={this.state.columns} data={this.state.posts} />
+          <Button onClick={this.deleteSelected}>Удалить</Button>
+          <ReactTable id="tableQ" columns={this.state.columns} data={this.state.posts} />
         </div>
       </div>
     );
@@ -259,6 +255,17 @@ class App extends Component {
 }
 var count_rows;
 var stroke;
+
+function getNewId() {
+  let allItemsString = JSON.parse(localStorage.getItem("items"));
+  let maxId = 0;
+  allItemsString.forEach((element) => {
+    if (element.id > maxId) {
+      maxId = element.id;
+    }
+  });
+  return ++maxId;
+}
 
 function removestrokeitems() {
   // Объявление новой переменной состояния «count»

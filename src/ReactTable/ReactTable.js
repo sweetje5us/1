@@ -106,7 +106,9 @@ export default class Table extends React.Component {
         keyField="id"
         data={JSON.parse(localStorage.getItem("items"))}
         selectRow={selectRowProp}
+        
         //
+
         columns={columns}
         defaultSorted={defaultSorted}
         // cellEdit={cellEditFactory({ mode: "click" })} - редактирование элемента таблицы
