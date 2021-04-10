@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import ReactTable from "./ReactTable/ReactTable";
+import onSelectRow from "./ReactTable/ReactTable";
 import Modal from "react-modal";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -86,11 +87,12 @@ class App extends Component {
     this.setState({ secondModalIsOpen: false });
   };
   deleteSelected = () => {
-    console.log(JSON.stringify(tableQ.selectRow));
+    console.log(JSON.stringify(row));
   };
 
   render() {
     //randomData();
+    //если поломаются данные в localstorage
 
     return (
       <div className="App">
@@ -247,7 +249,11 @@ class App extends Component {
             </Form>
           </Modal>
           <Button onClick={this.deleteSelected}>Удалить</Button>
-          <ReactTable id="tableQ" columns={this.state.columns} data={this.state.posts} />
+          <ReactTable
+            id="tableQ"
+            columns={this.state.columns}
+            data={this.state.posts}
+          />
         </div>
       </div>
     );
