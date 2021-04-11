@@ -86,14 +86,16 @@ const defaultSorted = [
 
 function onSelectRow(row, isSelected, e) {
   let stroke = JSON.stringify(row);
+  let allstrokes = localStorage.getItem("selected");
   if (isSelected) {
     alert(`You just selected '${JSON.stringify(row)}'`);
-    stroke = localStorage.getItem("selected") + `, ` + stroke;
+    stroke = allstrokes + `, ` + stroke;
     localStorage.setItem("selected", stroke);
   } else {
-    stroke = stroke.replace(JSON.stringify(row), "");
-    localStorage.setItem("selected", stroke);
-    alert(stroke);
+    alert(`You just unselected '${JSON.stringify(row)}'`);
+    stroke = ", " + JSON.stringify(row);
+    allstrokes = allstrokes.replace(stroke, "");
+    localStorage.setItem("selected", allstrokes);
   }
 }
 
