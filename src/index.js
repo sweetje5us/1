@@ -34,7 +34,6 @@ class App extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -66,7 +65,7 @@ class App extends Component {
 
       // isSelected: Boolean(this.state.checkbox)
     };
-    let stroke = `,` + JSON.stringify(rowArray) + `]`;
+    let stroke = `, ` + JSON.stringify(rowArray) + `]`;
     stroke =
       localStorage
         .getItem("items")
@@ -90,7 +89,7 @@ class App extends Component {
   };
 
   render() {
-    //randomData();
+    randomData();
     //если поломаются данные в localstorage
 
     return (
@@ -272,49 +271,35 @@ function getNewId() {
   return ++maxId;
 }
 
-function consolelogitems() {
-  // Объявление новой переменной состояния «count»
-
-  stroke = stroke + localStorage.getItem("items");
-  localStorage.setItem("count-rows", stroke);
-  console.log(stroke);
-  console.log(count_rows);
-}
 function deleteSelected() {
   let deleteStroke = localStorage.getItem("selected");
   console.log(deleteStroke);
   let allstrokes = localStorage.getItem("items");
-  console.log(allstrokes);
-  let resultRow = allstrokes.replace(deleteStroke, "");
-  console.log(resultRow);
+  if (deleteStroke != "") {
+    let resultRow = allstrokes.replace(deleteStroke, "");
+    console.log(resultRow);
+    localStorage.setItem("items", String(resultRow));
+    alert("вы удалили строку");
+  } else {
+    alert("вы не выбрали строку для удаления");
+  }
 }
+
 function randomData() {
   localStorage.setItem(
     "items",
     JSON.stringify([
       {
         id: "1",
-        name: "zBAC",
-        surname: "zsasd",
-        lastname: "asd",
-        position: "director2",
-        bdate: "08.04.2021",
+        name: "test",
+        surname: "test",
+        lastname: "test",
+        position: "tester",
+        bdate: "01.01.1234",
         sex: "male",
-        fdate: "08.04.2021",
-        hdate: "08.04.2021",
-        drive_l: "no"
-      },
-      {
-        id: "2",
-        name: "BAC",
-        surname: "dsad",
-        lastname: "dsad",
-        position: "director",
-        bdate: "08.04.2021",
-        sex: "male",
-        fdate: "08.04.2021",
-        hdate: "08.04.2021",
-        drive_l: "yes"
+        fdate: "01.01.2000",
+        hdate: "01.01.2021",
+        drive_l: "false"
       }
     ])
   );

@@ -104,6 +104,7 @@ function onSelectAllRows(isChecked, row, e) {
   let allstrokes = localStorage.getItem("selected");
   if (isChecked) {
     //alert(`You just selected '${JSON.stringify(row)}'`);
+
     stroke = allstrokes + `, ` + stroke;
     localStorage.setItem("selected", stroke);
   } else {
