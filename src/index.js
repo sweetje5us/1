@@ -32,6 +32,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleChange(event) {
@@ -68,6 +69,20 @@ class App extends Component {
         .getItem("items")
         .substring(0, localStorage.getItem("items").length - 1) + stroke;
     localStorage.setItem("items", stroke);
+  }
+
+  handleDelete(event) {
+    this.setState({ deletedStroke: true });
+    let deleteStroke = localStorage.getItem("selected");
+    let allstrokes = localStorage.getItem("items");
+    if (deleteStroke !== "") {
+      let resultRow = allstrokes.replace(deleteStroke, "");
+      localStorage.setItem("items", String(resultRow));
+      alert("вы удалили строку");
+    } else {
+      alert("вы не выбрали строку для удаления");
+    }
+    localStorage.setItem("selected", "");
   }
 
   openModal = () => {
@@ -239,7 +254,7 @@ class App extends Component {
               <Button onClick={this.closeSecondModal}>Закрыть</Button>
             </Form>
           </Modal>
-          <Button onClick={() => deleteSelected()}>Удалить</Button>
+          <Button onClick={this.handleDelete}>Удалить</Button>
           <ReactTable
             id="tableQ"
             columns={this.state.columns}
@@ -261,8 +276,6 @@ function getNewId() {
   });
   return ++maxId;
 }
-
-
 
 function deleteSelected() {
   let deleteStroke = localStorage.getItem("selected");
