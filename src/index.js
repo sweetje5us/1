@@ -63,6 +63,8 @@ class App extends Component {
       fdate: this.state.fdate,
       hdate: this.state.hdate,
       drive_l: Boolean(this.state.drive_l)
+
+      // isSelected: Boolean(this.state.checkbox)
     };
     let stroke = `,` + JSON.stringify(rowArray) + `]`;
     stroke =
@@ -85,9 +87,6 @@ class App extends Component {
 
   closeSecondModal = () => {
     this.setState({ secondModalIsOpen: false });
-  };
-  deleteSelected = () => {
-    console.log(JSON.stringify(row));
   };
 
   render() {
@@ -248,7 +247,7 @@ class App extends Component {
               <Button onClick={this.closeSecondModal}>Закрыть</Button>
             </Form>
           </Modal>
-          <Button onClick={this.deleteSelected}>Удалить</Button>
+          <Button onClick={() => deleteSelected()}>Удалить</Button>
           <ReactTable
             id="tableQ"
             columns={this.state.columns}
@@ -273,11 +272,6 @@ function getNewId() {
   return ++maxId;
 }
 
-function removestrokeitems() {
-  // Объявление новой переменной состояния «count»
-  localStorage.removeItem("count_rows");
-  stroke = "";
-}
 function consolelogitems() {
   // Объявление новой переменной состояния «count»
 
@@ -285,6 +279,14 @@ function consolelogitems() {
   localStorage.setItem("count-rows", stroke);
   console.log(stroke);
   console.log(count_rows);
+}
+function deleteSelected() {
+  let deleteStroke = localStorage.getItem("selected");
+  console.log(deleteStroke);
+  let allstrokes = localStorage.getItem("items");
+  console.log(allstrokes);
+  let resultRow = allstrokes.replace(deleteStroke, "");
+  console.log(resultRow);
 }
 function randomData() {
   localStorage.setItem(

@@ -83,28 +83,42 @@ const defaultSorted = [
     order: "desc"
   }
 ];
-
-function onSelectRow(row, isSelected, e) {
+//Выделение строк и запись в localStorage.getItem("selected");
+function onSelectRow(row, isChecked, e) {
   let stroke = JSON.stringify(row);
   let allstrokes = localStorage.getItem("selected");
-  if (isSelected) {
-    alert(`You just selected '${JSON.stringify(row)}'`);
+  if (isChecked) {
+    //alert(`You just selected '${JSON.stringify(row)}'`);
     stroke = allstrokes + `, ` + stroke;
     localStorage.setItem("selected", stroke);
   } else {
-    alert(`You just unselected '${JSON.stringify(row)}'`);
-    stroke = ", " + JSON.stringify(row);
+    //alert(`You just unselected '${JSON.stringify(row)}'`);
+    stroke = "," + JSON.stringify(row);
     allstrokes = allstrokes.replace(stroke, "");
     localStorage.setItem("selected", allstrokes);
   }
 }
 
+function onSelectAllRows(isChecked, row, e) {
+  let stroke = JSON.stringify(row);
+  let allstrokes = localStorage.getItem("selected");
+  if (isChecked) {
+    //alert(`You just selected '${JSON.stringify(row)}'`);
+    stroke = allstrokes + `, ` + stroke;
+    localStorage.setItem("selected", stroke);
+  } else {
+    //alert(`You just unselected '${JSON.stringify(row)}'`);
+    localStorage.setItem("selected", "");
+  }
+}
+
 const selectRowProp = {
   mode: "checkbox",
-  clickToSelect: true,
+  clickToSelect: false,
   unselectable: [2],
   selected: [1],
   onSelect: onSelectRow,
+  onSelectAll: onSelectAllRows,
   bgColor: "red"
 };
 
@@ -117,14 +131,12 @@ export default class Table extends React.Component {
         data={JSON.parse(localStorage.getItem("items"))}
         selectRow={selectRowProp}
         //
-
+        hover={true}
         columns={columns}
         defaultSorted={defaultSorted}
         // cellEdit={cellEditFactory({ mode: "click" })}
         selectableRows // add for checkbox selection
         Clicked
-        selectableRows
-        // Pass the function only
         selectableRowsComponentProps={{ inkDisabled: true }} // optionally, pass Material Ui supported props down to our custom checkbox
       />
     );
