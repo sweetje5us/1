@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import ReactTable from "./ReactTable/ReactTable";
-import onSelectRow from "./ReactTable/ReactTable";
 import Modal from "react-modal";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,8 +8,6 @@ import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
 import "react-datepicker/dist/react-datepicker.css";
-import BootstrapTable from "react-bootstrap-table-next";
-import { useTable } from "react-table";
 
 class App extends Component {
   state = {
@@ -89,16 +86,13 @@ class App extends Component {
   };
 
   render() {
-    randomData();
+    //randomData();
     //если поломаются данные в localstorage
 
     return (
       <div className="App">
         <h1>Hello CodeSandbox</h1>
         <div className="container">
-          <Button onClick={() => consolelogitems()}>Нажми на меня</Button>
-          <Button onClick={() => removestrokeitems()}>очистить счетчик</Button>
-          <Button onClick={() => saveData()}>Сохранить</Button>
           <Button onClick={this.openSecondModal}>Добавить запись</Button>
           <Button onClick={this.openModal}>Редактировать</Button>
 
@@ -163,7 +157,6 @@ class App extends Component {
                   name="name"
                   type="text"
                   // required="true"
-                  type="text"
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
@@ -257,8 +250,6 @@ class App extends Component {
     );
   }
 }
-var count_rows;
-var stroke;
 
 function getNewId() {
   let allItemsString = JSON.parse(localStorage.getItem("items"));
@@ -271,13 +262,13 @@ function getNewId() {
   return ++maxId;
 }
 
+
+
 function deleteSelected() {
   let deleteStroke = localStorage.getItem("selected");
-  console.log(deleteStroke);
   let allstrokes = localStorage.getItem("items");
-  if (deleteStroke != "") {
+  if (deleteStroke !== "") {
     let resultRow = allstrokes.replace(deleteStroke, "");
-    console.log(resultRow);
     localStorage.setItem("items", String(resultRow));
     alert("вы удалили строку");
   } else {
