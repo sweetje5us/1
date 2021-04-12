@@ -98,12 +98,6 @@ function onSelectRow(row, isChecked, e) {
         element.selected = true;
       }
     });
-
-    let stroke = JSON.stringify(row);
-    //alert(`You just selected '${JSON.stringify(row)}'`);
-    stroke = allstrokes + stroke;
-    stroke = stroke.replace("}{", "},{");
-    localStorage.setItem("selected", stroke);
   } else {
     allitems.forEach((element) => {
       if (element.id == row.id) {
@@ -115,19 +109,18 @@ function onSelectRow(row, isChecked, e) {
 }
 
 function onSelectAllRows(isChecked, row, e) {
-  let stroke = JSON.stringify(row);
   let allstrokes = localStorage.getItem("selected");
+  let allitems = JSON.parse(localStorage.getItem("items"));
   if (isChecked) {
-    //alert(`You just selected '${JSON.stringify(row)}'`);
-
-    stroke = allstrokes + stroke;
-    stroke = stroke.substring(1);
-    stroke = stroke.replace("}{", "},{");
-    localStorage.setItem("selected", stroke);
+    allitems.forEach((element) => {
+      element.selected = true;
+    });
   } else {
-    //alert(`You just unselected '${JSON.stringify(row)}'`);
-    localStorage.setItem("selected", "");
+    allitems.forEach((element) => {
+      element.selected = false;
+    });
   }
+  localStorage.setItem("items", JSON.stringify(allitems));
 }
 
 const selectRowProp = {

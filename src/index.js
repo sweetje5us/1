@@ -116,13 +116,15 @@ class App extends Component {
       if (result.isConfirmed) {
         let allitems = JSON.parse(localStorage.getItem("items"));
         var count = 0;
-        allitems.forEach((item, index, array) => {
+        let allitemsClone = allitems;
+        console.log(allitemsClone);
+        allitems.slice(0).forEach((item, index, array) => {
           if (item.selected == true) {
-            allitems.splice(index, 1);
             ++count;
-
-            console.log(array);
+            allitems.splice(allitems.indexOf(item), 1);
           }
+
+          localStorage.setItem("items", JSON.stringify(allitems));
         });
 
         if (allitems == "") {
@@ -155,55 +157,6 @@ class App extends Component {
     });
   }
 
-  handleDelete2(event) {
-    Swal.fire({
-      title: "Вы уверены?",
-      text: "Запись будет удалена из таблицы!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Да, удалить запись!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let deleteStroke = localStorage.getItem("selected");
-        let allstrokes = localStorage.getItem("items");
-        if (deleteStroke !== "") {
-          let resultRow = allstrokes.replace(deleteStroke, "");
-          resultRow = resultRow.replace("}{", "},{");
-          resultRow = resultRow.replace(",]", "]");
-          resultRow = resultRow.replace("[,", "[");
-          resultRow = resultRow.replace(",,", ",");
-
-          localStorage.setItem("items", String(resultRow));
-          if (
-            localStorage.getItem("items") === "" ||
-            localStorage.getItem("items") === "["
-          ) {
-            localStorage.setItem("items", "[]");
-            Swal.fire({
-              icon: "success",
-              title: "Успешно!",
-              text: "Вы удалили все записи!"
-            });
-            this.setState({ deletedStroke: true });
-          } else {
-            this.setState({ deletedStroke: true });
-            Swal.fire("Готово!", "Строка была успешно удалена", "success");
-          }
-        } else {
-          this.setState({ deletedStroke: false });
-          Swal.fire({
-            icon: "error",
-            title: "Ошибка!",
-            text: "Вы не выбрали строку для удаления!"
-          });
-        }
-        localStorage.setItem("selected", "");
-      }
-    });
-  }
-
   openModal = () => {
     this.setState({ modalIsOpen: true });
   };
@@ -231,7 +184,7 @@ class App extends Component {
 
   render() {
     //randomData();
-    //если поломаются данные в localstorage
+    //если поломаются данные в localstorage стереть // выше
 
     return (
       <div className="App">
