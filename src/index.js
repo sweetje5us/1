@@ -74,6 +74,7 @@ class App extends Component {
         .substring(0, localStorage.getItem("items").length - 1) + stroke;
     stroke = stroke.replace("}{", "},{");
     localStorage.setItem("items", stroke);
+    unselectData();
   }
   handleOpenEditModal(event) {
     let editStroke = localStorage.getItem("selected");
@@ -163,26 +164,23 @@ class App extends Component {
 
   closeModal = () => {
     this.setState({ modalIsOpen: false });
-  };
-  openModal3 = () => {
-    this.setState({ modalIsOpen3: true });
+    unselectData();
   };
 
-  closeModal3 = () => {
-    this.setState({ modalIsOpen3: false });
-  };
   openSecondModal = () => {
     this.setState({ secondModalIsOpen: true });
   };
 
   closeSecondModal = () => {
     this.setState({ secondModalIsOpen: false });
+    unselectData();
   };
   selectedStroke = () => {
     selectedStroke({ selectedStroke: true });
   };
 
   render() {
+    unselectData();
     //randomData();
     //если поломаются данные в localstorage стереть // выше
 
@@ -358,6 +356,14 @@ function getNewId() {
     }
   });
   return ++maxId;
+}
+
+function unselectData() {
+  let allitems = JSON.parse(localStorage.getItem("items"));
+  allitems.forEach((element) => {
+    element.selected = false;
+  });
+  localStorage.setItem("items", JSON.stringify(allitems));
 }
 
 function randomData() {
