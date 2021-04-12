@@ -96,7 +96,6 @@ function onSelectRow(row, isChecked, e) {
     allitems.forEach((element) => {
       if (element.id == row.id) {
         element.selected = true;
-        localStorage.setItem("items", JSON.stringify(allitems));
       }
     });
 
@@ -109,10 +108,10 @@ function onSelectRow(row, isChecked, e) {
     allitems.forEach((element) => {
       if (element.id == row.id) {
         element.selected = false;
-        localStorage.setItem("items", JSON.stringify(allitems));
       }
     });
   }
+  localStorage.setItem("items", JSON.stringify(allitems));
 }
 
 function onSelectAllRows(isChecked, row, e) {

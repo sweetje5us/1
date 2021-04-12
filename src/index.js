@@ -106,6 +106,58 @@ class App extends Component {
   handleDelete(event) {
     Swal.fire({
       title: "Вы уверены?",
+      text: "Записи будут удалены из таблицы!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Да, удалить запись!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let allitems = JSON.parse(localStorage.getItem("items"));
+        var count = 0;
+        allitems.forEach((item, index, array) => {
+          if (item.selected == true) {
+            allitems.splice(index, 1);
+            ++count;
+
+            console.log(array);
+          }
+        });
+
+        if (allitems == "") {
+          allitems = "[]";
+          // localStorage.setItem("items", allitems);
+          this.setState({ deletedStroke: true });
+          Swal.fire({
+            icon: "success",
+            title: "Успешно!",
+            text: "Вы удалили все записи!"
+          });
+        } else {
+          // localStorage.setItem("items", allitems);
+          this.setState({ deletedStroke: true });
+          Swal.fire(
+            "Готово!",
+            count + " строк были успешно удалены",
+            "success"
+          );
+        }
+      }
+      if (count == 0) {
+        this.setState({ deletedStroke: false });
+        Swal.fire({
+          icon: "error",
+          title: "Ошибка!",
+          text: "Вы не выбрали строку для удаления!"
+        });
+      }
+    });
+  }
+
+  handleDelete2(event) {
+    Swal.fire({
+      title: "Вы уверены?",
       text: "Запись будет удалена из таблицы!",
       icon: "warning",
       showCancelButton: true,
@@ -173,9 +225,9 @@ class App extends Component {
   closeSecondModal = () => {
     this.setState({ secondModalIsOpen: false });
   };
-  selectedStroke = ()=>{
+  selectedStroke = () => {
     selectedStroke({ selectedStroke: true });
-  }
+  };
 
   render() {
     //randomData();
@@ -360,7 +412,7 @@ function randomData() {
     "items",
     JSON.stringify([
       {
-        id: "0",
+        id: 1,
         name: "test",
         surname: "test",
         lastname: "test",
@@ -369,7 +421,8 @@ function randomData() {
         sex: "male",
         fdate: "01.01.2000",
         hdate: "01.01.2021",
-        drive_l: "false"
+        drive_l: false,
+        selected: false
       }
     ])
   );
