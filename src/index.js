@@ -35,6 +35,7 @@ class App extends Component {
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.selectedStroke = this.selectedStroke.bind(this);
   }
 
   handleChange(event) {
@@ -61,9 +62,8 @@ class App extends Component {
       sex: this.state.sex,
       fdate: this.state.fdate,
       hdate: this.state.hdate,
-      drive_l: Boolean(this.state.drive_l)
-
-      // isSelected: Boolean(this.state.checkbox)
+      drive_l: Boolean(this.state.drive_l),
+      selected: Boolean(this.state.selected)
     };
     let test = localStorage.getItem("items");
     let stroke = JSON.stringify(rowArray) + `]`;
@@ -120,16 +120,20 @@ class App extends Component {
           let resultRow = allstrokes.replace(deleteStroke, "");
           resultRow = resultRow.replace("}{", "},{");
           resultRow = resultRow.replace(",]", "]");
+          resultRow = resultRow.replace("[,", "[");
           resultRow = resultRow.replace(",,", ",");
 
           localStorage.setItem("items", String(resultRow));
-          if (localStorage.getItem("items") === "") {
-            randomData();
-            Swal.fire(
-              "Вы удалили все строки!",
-              "В целях правильности работы была добавлена строка с id=0",
-              "success"
-            );
+          if (
+            localStorage.getItem("items") === "" ||
+            localStorage.getItem("items") === "["
+          ) {
+            localStorage.setItem("items", "[]");
+            Swal.fire({
+              icon: "success",
+              title: "Успешно!",
+              text: "Вы удалили все записи!"
+            });
             this.setState({ deletedStroke: true });
           } else {
             this.setState({ deletedStroke: true });
@@ -169,6 +173,9 @@ class App extends Component {
   closeSecondModal = () => {
     this.setState({ secondModalIsOpen: false });
   };
+  selectedStroke = ()=>{
+    selectedStroke({ selectedStroke: true });
+  }
 
   render() {
     //randomData();

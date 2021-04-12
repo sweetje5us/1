@@ -72,6 +72,12 @@ const columns = [
     dataField: "drive_l",
     text: "Driver Licence",
     sort: true
+  },
+  {
+    dataField: "selected",
+    text: "Selected",
+    sort: true,
+    hidden: false
   }
 ];
 
@@ -84,19 +90,28 @@ const defaultSorted = [
 
 //Выделение строк и запись в localStorage.getItem("selected");
 function onSelectRow(row, isChecked, e) {
-  let stroke = JSON.stringify(row);
   let allstrokes = localStorage.getItem("selected");
+  let allitems = JSON.parse(localStorage.getItem("items"));
   if (isChecked) {
+    allitems.forEach((element) => {
+      if (element.id == row.id) {
+        element.selected = true;
+        localStorage.setItem("items", JSON.stringify(allitems));
+      }
+    });
+
+    let stroke = JSON.stringify(row);
     //alert(`You just selected '${JSON.stringify(row)}'`);
     stroke = allstrokes + stroke;
     stroke = stroke.replace("}{", "},{");
     localStorage.setItem("selected", stroke);
   } else {
-    //alert(`You just unselected '${JSON.stringify(row)}'`);
-    stroke = JSON.stringify(row);
-    allstrokes = allstrokes.replace(stroke, "");
-    allstrokes = allstrokes.replace("}{", "},{");
-    localStorage.setItem("selected", allstrokes);
+    allitems.forEach((element) => {
+      if (element.id == row.id) {
+        element.selected = false;
+        localStorage.setItem("items", JSON.stringify(allitems));
+      }
+    });
   }
 }
 
