@@ -1,59 +1,16 @@
-const data = [
+const data = JSON.stringify([
   {
-    name: "BAC",
-    surname: "dsad",
-    lastname: "dsad",
-    position: "director",
-    bdate: "05-02-1993",
+    id: "1",
+    name: "test",
+    surname: "test",
+    lastname: "test",
+    position: "tester",
+    bdate: "01.01.1234",
     sex: "male",
-    fdate: "01-12-2021",
-    hdate: "02/12/2021",
-    drive_l: "yes"
-  },
-  {
-    name: "BAC",
-    surname: "dsad",
-    lastname: "dsad",
-    position: "director",
-    bdate: "05-02-1993",
-    sex: "male",
-    fdate: "12-11-2021",
-    hdate: "12-13-2021",
-    drive_l: "yes"
-  },
-  {
-    name: "BAC",
-    surname: "dsad",
-    lastname: "dsad",
-    position: "director",
-    bdate: "05-02-1993",
-    sex: "male",
-    fdate: "11-01-2022",
-    hdate: "12-12-2021",
-    drive_l: "yes"
-  },
-  {
-    name: "BAC",
-    surname: "dsad",
-    lastname: "dsad",
-    position: "director",
-    bdate: "05-02-1993",
-    sex: "male",
-    fdate: "12-12-2021",
-    hdate: "12-12-2021",
-    drive_l: "yes"
-  },
-  {
-    name: "BAC",
-    surname: "dsad",
-    lastname: "dsad",
-    position: "director",
-    bdate: "05-02-1993",
-    sex: "male",
-    fdate: "12-12-2021",
-    hdate: "12-12-2021",
-    drive_l: "yes"
+    fdate: "01.01.2000",
+    hdate: "01.01.2021",
+    drive_l: "false"
   }
-];
+]);
 
 export { data };

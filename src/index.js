@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Provider } from "mobx-react";
+import data from "./data";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -64,11 +65,14 @@ class App extends Component {
 
       // isSelected: Boolean(this.state.checkbox)
     };
-    let stroke = `, ` + JSON.stringify(rowArray) + `]`;
+    let test = localStorage.getItem("items");
+    let stroke = JSON.stringify(rowArray) + `]`;
+    console.log(stroke);
     stroke =
       localStorage
         .getItem("items")
         .substring(0, localStorage.getItem("items").length - 1) + stroke;
+    stroke = stroke.replace("}{", "},{");
     localStorage.setItem("items", stroke);
   }
   handleOpenEditModal(event) {
@@ -114,9 +118,23 @@ class App extends Component {
         let allstrokes = localStorage.getItem("items");
         if (deleteStroke !== "") {
           let resultRow = allstrokes.replace(deleteStroke, "");
+          resultRow = resultRow.replace("}{", "},{");
+          resultRow = resultRow.replace(",]", "]");
+          resultRow = resultRow.replace(",,", ",");
+
           localStorage.setItem("items", String(resultRow));
-          this.setState({ deletedStroke: true });
-          Swal.fire("Готово!", "Строка была успешно удалена", "success");
+          if (localStorage.getItem("items") === "") {
+            randomData();
+            Swal.fire(
+              "Вы удалили все строки!",
+              "В целях правильности работы была добавлена строка с id=0",
+              "success"
+            );
+            this.setState({ deletedStroke: true });
+          } else {
+            this.setState({ deletedStroke: true });
+            Swal.fire("Готово!", "Строка была успешно удалена", "success");
+          }
         } else {
           this.setState({ deletedStroke: false });
           Swal.fire({
@@ -158,7 +176,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Hello CodeSandbox</h1>
+        <h1>Тестовое задание Брылев Е.В.</h1>
         <div className="container">
           <Button onClick={this.openSecondModal}>Добавить запись</Button>
           <Button onClick={this.openModal}>Редактировать</Button>
@@ -335,11 +353,11 @@ function randomData() {
     "items",
     JSON.stringify([
       {
-        id: "1",
+        id: "0",
         name: "test",
         surname: "test",
         lastname: "test",
-        position: "tester",
+        position: "test",
         bdate: "01.01.1234",
         sex: "male",
         fdate: "01.01.2000",

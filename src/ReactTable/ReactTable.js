@@ -78,21 +78,24 @@ const columns = [
 const defaultSorted = [
   {
     dataField: "id",
-    order: "desc"
+    order: "asc"
   }
 ];
+
 //Выделение строк и запись в localStorage.getItem("selected");
 function onSelectRow(row, isChecked, e) {
   let stroke = JSON.stringify(row);
   let allstrokes = localStorage.getItem("selected");
   if (isChecked) {
     //alert(`You just selected '${JSON.stringify(row)}'`);
-    stroke = allstrokes + `, ` + stroke;
+    stroke = allstrokes + stroke;
+    stroke = stroke.replace("}{", "},{");
     localStorage.setItem("selected", stroke);
   } else {
     //alert(`You just unselected '${JSON.stringify(row)}'`);
-    stroke = "," + JSON.stringify(row);
+    stroke = JSON.stringify(row);
     allstrokes = allstrokes.replace(stroke, "");
+    allstrokes = allstrokes.replace("}{", "},{");
     localStorage.setItem("selected", allstrokes);
   }
 }
@@ -103,7 +106,9 @@ function onSelectAllRows(isChecked, row, e) {
   if (isChecked) {
     //alert(`You just selected '${JSON.stringify(row)}'`);
 
-    stroke = allstrokes + `, ` + stroke;
+    stroke = allstrokes + stroke;
+    stroke = stroke.substring(1);
+    stroke = stroke.replace("}{", "},{");
     localStorage.setItem("selected", stroke);
   } else {
     //alert(`You just unselected '${JSON.stringify(row)}'`);
@@ -115,7 +120,7 @@ const selectRowProp = {
   mode: "checkbox",
   clickToSelect: false,
   unselectable: [2],
-  selected: [1],
+  selected: [0],
   onSelect: onSelectRow,
   onSelectAll: onSelectAllRows,
   bgColor: "red"
