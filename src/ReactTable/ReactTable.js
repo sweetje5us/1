@@ -47,21 +47,6 @@ const columns = [
     dataField: "fdate",
     text: "FDate",
     sort: true
-    // validator: (newValue, row, column) => {
-    //   if (isNaN(newValue)) {
-    //     return {
-    //       valid: false,
-    //       message: "Price should be numeric"
-    //     };
-    //   }
-    //   if (newValue > 5) {
-    //     return {
-    //       valid: false,
-    //       message: "Price should less than 6"
-    //     };
-    //   }
-    //   return true;
-    // }
   },
   {
     dataField: "hdate",
@@ -77,10 +62,9 @@ const columns = [
     dataField: "selected",
     text: "Selected",
     sort: true,
-    hidden: false
+    hidden: true
   }
 ];
-
 const defaultSorted = [
   {
     dataField: "id",

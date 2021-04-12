@@ -63,7 +63,7 @@ class App extends Component {
       fdate: this.state.fdate,
       hdate: this.state.hdate,
       drive_l: Boolean(this.state.drive_l),
-      selected: Boolean(this.state.selected)
+      selected: Boolean(this.selected)
     };
     let test = localStorage.getItem("items");
     let stroke = JSON.stringify(rowArray) + `]`;
@@ -117,8 +117,6 @@ class App extends Component {
       if (result.isConfirmed) {
         let allitems = JSON.parse(localStorage.getItem("items"));
         var count = 0;
-        let allitemsClone = allitems;
-        console.log(allitemsClone);
         allitems.slice(0).forEach((item, index, array) => {
           if (item.selected == true) {
             ++count;
@@ -129,7 +127,6 @@ class App extends Component {
         });
 
         if (allitems == "") {
-          allitems = "[]";
           // localStorage.setItem("items", allitems);
           this.setState({ deletedStroke: true });
           Swal.fire({
@@ -212,7 +209,13 @@ class App extends Component {
               </Form.Group>
               <Form.Group controlId="formBasicPosition">
                 <Form.Label>Должность</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control as="select">
+                  <option>Младший дворник</option>
+                  <option>Старший охранник</option>
+                  <option>Дизайнер</option>
+                  <option>Ведущий специалист</option>
+                  <option>Тамада</option>
+                </Form.Control>
               </Form.Group>
               <Form.Group controlId="formBasicBirthDate">
                 <Form.Label>Дата рождения</Form.Label>
@@ -251,7 +254,7 @@ class App extends Component {
                 <Form.Control
                   name="name"
                   type="text"
-                  // required="true"
+                  required="true"
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
@@ -263,6 +266,7 @@ class App extends Component {
                   type="text"
                   value={this.state.surname}
                   onChange={this.handleChange}
+                  required="true"
                 />
               </Form.Group>
               <Form.Group controlId="formBasicLastName">
@@ -277,11 +281,18 @@ class App extends Component {
               <Form.Group controlId="formBasicPosition">
                 <Form.Label>Должность</Form.Label>
                 <Form.Control
-                  type="text"
+                  as="select"
                   name="position"
                   value={this.state.position}
                   onChange={this.handleChange}
-                />
+                  required="true"
+                >
+                  <option>Младший дворник</option>
+                  <option>Старший охранник</option>
+                  <option>Дизайнер</option>
+                  <option>Ведущий специалист</option>
+                  <option>Тамада</option>
+                </Form.Control>
               </Form.Group>
               <Form.Group controlId="formBasicBirthDate">
                 <Form.Label>Дата рождения</Form.Label>
@@ -290,6 +301,7 @@ class App extends Component {
                   type="date"
                   value={this.state.bdate}
                   onChange={this.handleChange}
+                  required="true"
                 />
               </Form.Group>
               <Form.Group controlId="formBasicSex">
@@ -299,6 +311,7 @@ class App extends Component {
                   name="sex"
                   value={this.state.sex}
                   onChange={this.handleChange}
+                  required="true"
                 />
               </Form.Group>
               <Form.Group controlId="formBasicFDate">
@@ -308,6 +321,7 @@ class App extends Component {
                   name="fdate"
                   value={this.state.fdate}
                   onChange={this.handleChange}
+                  required="true"
                 />
               </Form.Group>
               <Form.Group controlId="formBasicHDate">
