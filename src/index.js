@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import ReactTable from "./ReactTable/ReactTable";
 import Modal from "react-modal";
-
+import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import { Provider } from "mobx-react";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -70,19 +71,63 @@ class App extends Component {
         .substring(0, localStorage.getItem("items").length - 1) + stroke;
     localStorage.setItem("items", stroke);
   }
-
-  handleDelete(event) {
-    this.setState({ deletedStroke: true });
-    let deleteStroke = localStorage.getItem("selected");
+  handleOpenEditModal(event) {
+    let editStroke = localStorage.getItem("selected");
     let allstrokes = localStorage.getItem("items");
-    if (deleteStroke !== "") {
-      let resultRow = allstrokes.replace(deleteStroke, "");
-      localStorage.setItem("items", String(resultRow));
-      alert("вы удалили строку");
+    if (editStroke !== "") {
+      // открытие модального окна
+      // присвоение ипутам значения из selected
     } else {
-      alert("вы не выбрали строку для удаления");
+      this.setState({ changeRow: false });
+      Swal.fire({
+        icon: "error",
+        title: "Ошибка!",
+        text: "Вы не выбрали строку для редактирования!"
+      });
     }
     localStorage.setItem("selected", "");
+  }
+
+  handleChangeRow(event) {
+    let resultRow = allstrokes.replace(editStroke, newStroke);
+    localStorage.setItem("items", String(resultRow));
+    this.setState({ changeRow: true });
+    Swal.fire({
+      icon: "success",
+      title: "Успешно!",
+      text: "Вы изменили запись!"
+    });
+  }
+
+  handleDelete(event) {
+    Swal.fire({
+      title: "Вы уверены?",
+      text: "Запись будет удалена из таблицы!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Да, удалить запись!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let deleteStroke = localStorage.getItem("selected");
+        let allstrokes = localStorage.getItem("items");
+        if (deleteStroke !== "") {
+          let resultRow = allstrokes.replace(deleteStroke, "");
+          localStorage.setItem("items", String(resultRow));
+          this.setState({ deletedStroke: true });
+          Swal.fire("Готово!", "Строка была успешно удалена", "success");
+        } else {
+          this.setState({ deletedStroke: false });
+          Swal.fire({
+            icon: "error",
+            title: "Ошибка!",
+            text: "Вы не выбрали строку для удаления!"
+          });
+        }
+        localStorage.setItem("selected", "");
+      }
+    });
   }
 
   openModal = () => {
@@ -91,6 +136,13 @@ class App extends Component {
 
   closeModal = () => {
     this.setState({ modalIsOpen: false });
+  };
+  openModal3 = () => {
+    this.setState({ modalIsOpen3: true });
+  };
+
+  closeModal3 = () => {
+    this.setState({ modalIsOpen3: false });
   };
   openSecondModal = () => {
     this.setState({ secondModalIsOpen: true });
@@ -255,6 +307,7 @@ class App extends Component {
             </Form>
           </Modal>
           <Button onClick={this.handleDelete}>Удалить</Button>
+
           <ReactTable
             id="tableQ"
             columns={this.state.columns}
@@ -275,18 +328,6 @@ function getNewId() {
     }
   });
   return ++maxId;
-}
-
-function deleteSelected() {
-  let deleteStroke = localStorage.getItem("selected");
-  let allstrokes = localStorage.getItem("items");
-  if (deleteStroke !== "") {
-    let resultRow = allstrokes.replace(deleteStroke, "");
-    localStorage.setItem("items", String(resultRow));
-    alert("вы удалили строку");
-  } else {
-    alert("вы не выбрали строку для удаления");
-  }
 }
 
 function randomData() {
