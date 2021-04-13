@@ -9,7 +9,6 @@ const columns = [
     sort: true,
     isKey: true,
     cellEdit: false
-    
   },
   {
     dataField: "name",
@@ -119,17 +118,17 @@ export default class Table extends React.Component {
   render() {
     return (
       <BootstrapTable
+        id="table"
         bootstrap4
         keyField="id"
         data={JSON.parse(localStorage.getItem("items"))}
         selectRow={selectRowProp}
-        blurToSave= {true}
-        
         //
         hover={true}
         columns={columns}
         defaultSorted={defaultSorted}
         cellEdit={cellEditFactory({ mode: "dbclick" })}
+        blurToSave={true}
         selectableRows // add for checkbox selection
         Clicked
         selectableRowsComponentProps={{ inkDisabled: true }} // optionally, pass Material Ui supported props down to our custom checkbox
@@ -137,4 +136,3 @@ export default class Table extends React.Component {
     );
   }
 }
-

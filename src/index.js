@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import ReactTable from "./ReactTable/ReactTable";
+import ReactTable, { Table } from "./ReactTable/ReactTable";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { MDBContainer, MDBInput } from "mdbreact";
+import "./index.css";
 
 import "react-datepicker/dist/react-datepicker.css";
+import BootstrapTable from "react-bootstrap-table-next";
 
 class App extends Component {
   state = {};
@@ -31,7 +33,7 @@ class App extends Component {
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleSave = this.handleDelete.bind(this);
+    this.handleSaveTable = this.handleSaveTable.bind(this);
   }
 
   handleChange(event) {
@@ -72,21 +74,6 @@ class App extends Component {
     localStorage.setItem("items", stroke);
     unselectData();
   }
-  handleOpenEditModal(event) {
-    let editStroke = localStorage.getItem("selected");
-    if (editStroke !== "") {
-      // открытие модального окна
-      // присвоение ипутам значения из selected
-    } else {
-      this.setState({ changeRow: false });
-      Swal.fire({
-        icon: "error",
-        title: "Ошибка!",
-        text: "Вы не выбрали строку для редактирования!"
-      });
-    }
-    localStorage.setItem("selected", "");
-  }
 
   handleChangeRow(event) {
     this.setState({ changeRow: true });
@@ -96,13 +83,14 @@ class App extends Component {
       text: "Вы изменили запись!"
     });
   }
-  handleSave(event) {
-    this.setState({ SaveTable: true });
-    Swal.fire({
-      icon: "success",
-      title: "Успешно!",
-      text: "Вы сохранили изменения!"
-    });
+  handleSaveTable(event) {
+    console.log(table.textContent);
+    // this.setState({ SaveTable: true });
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "Успешно!",
+    //   text: "Вы сохранили изменения!"
+    // });
   }
 
   handleDelete(event) {
@@ -156,15 +144,6 @@ class App extends Component {
     });
   }
 
-  openModal = () => {
-    this.setState({ modalIsOpen: true });
-  };
-
-  closeModal = () => {
-    this.setState({ modalIsOpen: false });
-    unselectData();
-  };
-
   openSecondModal = () => {
     this.setState({ secondModalIsOpen: true });
   };
@@ -187,15 +166,15 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <h1 className="container" style={{ paddingLeft: "5em" }}>
-            Тестовое задание <mark>Брылев Е.В.</mark>
-          </h1>
+          <h1 className="container" style={{ paddingLeft: "5em" }}></h1>
         </div>
         <div className="container">
           <Button onClick={this.openSecondModal}>Добавить запись</Button>
           <Button onClick={this.handleDelete}>Удалить</Button>
-          <Button onClick={this.handleSave}>Сохранить</Button>
+          <Button onClick={this.handleSaveTable}>Сохранить</Button>
           <Modal
+            class="modal-dialog modal-lg"
+            style={customStyles}
             isOpen={this.state.secondModalIsOpen}
             onRequestClose={this.closeSecondModal}
             ariaHideApp={false}
@@ -203,7 +182,7 @@ class App extends Component {
             <div>Режим добавления записи</div>
 
             <Form onSubmit={this.handleSubmit}>
-              <Form.Group controlId="formBasicName">
+              <Form.Group controlId="formBasicName" style={{ width: "200px" }}>
                 <Form.Label>Имя</Form.Label>
                 <Form.Control
                   name="name"
@@ -213,7 +192,10 @@ class App extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicSurName">
+              <Form.Group
+                controlId="formBasicSurName"
+                style={{ width: "200px" }}
+              >
                 <Form.Label>Фамилия</Form.Label>
                 <Form.Control
                   name="surname"
@@ -223,7 +205,10 @@ class App extends Component {
                   required={true}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicLastName">
+              <Form.Group
+                controlId="formBasicLastName"
+                style={{ width: "200px" }}
+              >
                 <Form.Label>Отчество</Form.Label>
                 <Form.Control
                   type="text"
@@ -232,7 +217,10 @@ class App extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicPosition">
+              <Form.Group
+                controlId="formBasicPosition"
+                style={{ width: "200px" }}
+              >
                 <Form.Label>Должность</Form.Label>
                 <Form.Control
                   as="select"
@@ -249,7 +237,10 @@ class App extends Component {
                   <option>Тамада</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group controlId="formBasicBirthDate">
+              <Form.Group
+                controlId="formBasicBirthDate"
+                style={{ width: "200px" }}
+              >
                 <Form.Label>Дата рождения</Form.Label>
                 <Form.Control
                   name="bdate"
@@ -260,7 +251,7 @@ class App extends Component {
                 />
               </Form.Group>
               <Form.Group controlId="formBasicDriverSex">
-                <MDBContainer className="mt-5">
+                <MDBContainer className="mt-5" style={{ width: "200px" }}>
                   <MDBInput
                     label="Male"
                     type="radio"
@@ -268,6 +259,7 @@ class App extends Component {
                     checked={this.state.sex === "Мужчина" ? true : false}
                     onChange={this.handleChange}
                     onClick={this.testGetValue("Мужчина")}
+                    style={{ width: "12px", height: "12px" }}
                   />
                   <MDBInput
                     label="Female"
@@ -276,11 +268,12 @@ class App extends Component {
                     checked={this.state.sex === "Женщина" ? true : false}
                     onClick={this.testGetValue("Женщина")}
                     onChange={this.handleChange}
+                    style={{ width: "12px", height: "12px" }}
                   />
                 </MDBContainer>
               </Form.Group>
 
-              <Form.Group controlId="formBasicFDate">
+              <Form.Group controlId="formBasicFDate" style={{ width: "200px" }}>
                 <Form.Label>Дата приема на работу</Form.Label>
                 <Form.Control
                   type="date"
@@ -290,7 +283,7 @@ class App extends Component {
                   required={true}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicHDate">
+              <Form.Group controlId="formBasicHDate" style={{ width: "200px" }}>
                 <Form.Label>Дата увольнения</Form.Label>
                 <Form.Control
                   type="date"
@@ -319,9 +312,6 @@ class App extends Component {
             id="tableQ"
             columns={this.state.columns}
             data={this.props.data}
-            exportCSV
-            csvFileName="data.csv"
-            style={{ display: "flex" }}
           />
         </div>
       </div>
@@ -370,5 +360,17 @@ function unselectData() {
     localStorage.setItem("items", JSON.stringify(allitems));
   }
 }
-
+const customStyles = {
+  content: {
+    width: "300px",
+    background: "white",
+    border: "1px solid #ccc",
+    transition: "2.1s ease-out",
+    boxshadow: "-2rem 2rem 2rem rgba(black, 0.2)",
+    filter: "blur(2)",
+    transform: "scale(1)",
+    opacity: "1",
+    visibility: "visible"
+  }
+};
 render(<App />, document.getElementById("root"));
