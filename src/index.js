@@ -6,16 +6,13 @@ import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { Provider } from "mobx-react";
-import data from "./data";
+import { MDBContainer, MDBInput } from "mdbreact";
+import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 class App extends Component {
-  state = {
-    modalIsOpen: false,
-    secondModalIsOpen: false
-  };
+  state = {};
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +32,6 @@ class App extends Component {
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.selectedStroke = this.selectedStroke.bind(this);
   }
 
   handleChange(event) {
@@ -59,13 +55,13 @@ class App extends Component {
       lastname: this.state.lastname,
       position: this.state.position,
       bdate: this.state.bdate,
-      sex: this.state.sex,
+      sex: String(this.state.sex),
       fdate: this.state.fdate,
       hdate: this.state.hdate,
       drive_l: Boolean(this.state.drive_l),
-      selected: Boolean(this.selected)
+      selected: Boolean(this.state.selected)
     };
-    let test = localStorage.getItem("items");
+
     let stroke = JSON.stringify(rowArray) + `]`;
     console.log(stroke);
     stroke =
@@ -94,8 +90,6 @@ class App extends Component {
   }
 
   handleChangeRow(event) {
-    let resultRow = allstrokes.replace(editStroke, newStroke);
-    localStorage.setItem("items", String(resultRow));
     this.setState({ changeRow: true });
     Swal.fire({
       icon: "success",
@@ -118,7 +112,7 @@ class App extends Component {
         let allitems = JSON.parse(localStorage.getItem("items"));
         var count = 0;
         allitems.slice(0).forEach((item, index, array) => {
-          if (item.selected == true) {
+          if (item.selected === true) {
             ++count;
             allitems.splice(allitems.indexOf(item), 1);
           }
@@ -126,7 +120,7 @@ class App extends Component {
           localStorage.setItem("items", JSON.stringify(allitems));
         });
 
-        if (allitems == "") {
+        if (allitems === "") {
           // localStorage.setItem("items", allitems);
           this.setState({ deletedStroke: true });
           Swal.fire({
@@ -144,7 +138,7 @@ class App extends Component {
           );
         }
       }
-      if (count == 0) {
+      if (count === 0) {
         this.setState({ deletedStroke: false });
         Swal.fire({
           icon: "error",
@@ -172,8 +166,10 @@ class App extends Component {
     this.setState({ secondModalIsOpen: false });
     unselectData();
   };
-  selectedStroke = () => {
-    selectedStroke({ selectedStroke: true });
+  testGetValue = (value) => () => {
+    this.setState({
+      sex: value
+    });
   };
 
   render() {
@@ -183,78 +179,30 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Тестовое задание Брылев Е.В.</h1>
+        <div class="row ">
+          <h1 class="container" style={{ paddingLeft: "5em" }}>
+            Тестовое задание <mark>Брылев Е.В.</mark>
+          </h1>
+        </div>
         <div className="container">
-          <Button onClick={this.openSecondModal}>Добавить запись</Button>
-          <Button onClick={this.openModal}>Редактировать</Button>
-
-          <Modal
-            isOpen={this.state.modalIsOpen}
-            onRequestClose={this.closeModal}
-            ariaHideApp={false}
-          >
-            <div>Режим редактирования записи</div>
-            <Form>
-              <Form.Group controlId="formBasicName">
-                <Form.Label>Имя</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-              <Form.Group controlId="formBasicSurName">
-                <Form.Label>Фамилия</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-              <Form.Group controlId="formBasicLastName">
-                <Form.Label>Отчество</Form.Label>
-                <Form.Control />
-              </Form.Group>
-              <Form.Group controlId="formBasicPosition">
-                <Form.Label>Должность</Form.Label>
-                <Form.Control as="select">
-                  <option>Младший дворник</option>
-                  <option>Старший охранник</option>
-                  <option>Дизайнер</option>
-                  <option>Ведущий специалист</option>
-                  <option>Тамада</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group controlId="formBasicBirthDate">
-                <Form.Label>Дата рождения</Form.Label>
-                <Form.Control type="date" />
-              </Form.Group>
-              <Form.Group controlId="formBasicSex">
-                <Form.Label>Пол</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-              <Form.Group controlId="formBasicFDate">
-                <Form.Label>Дата приема на работу</Form.Label>
-                <Form.Control type="date" />
-              </Form.Group>
-              <Form.Group controlId="formBasicHDate">
-                <Form.Label>Дата увольнения</Form.Label>
-                <Form.Control type="date" />
-              </Form.Group>
-              <Form.Group controlId="formBasicDriverLicence">
-                <Form.Check type="checkbox" label="Driver Licence" />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-              <Button onClick={this.closeModal}>Закрыть</Button>
-            </Form>
-          </Modal>
+          <Button onClick={this.openSecondModal} >Добавить запись</Button>
+          <Button onClick={this.handleDelete} >Удалить</Button>
           <Modal
             isOpen={this.state.secondModalIsOpen}
             onRequestClose={this.closeSecondModal}
             ariaHideApp={false}
           >
-            <div>Режим добавления записи</div>
+            <div>
+              <th>Режим добавления записи</th>
+            </div>
+            
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicName">
                 <Form.Label>Имя</Form.Label>
                 <Form.Control
                   name="name"
                   type="text"
-                  required="true"
+                  required={true}
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
@@ -266,7 +214,7 @@ class App extends Component {
                   type="text"
                   value={this.state.surname}
                   onChange={this.handleChange}
-                  required="true"
+                  required={true}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicLastName">
@@ -283,10 +231,11 @@ class App extends Component {
                 <Form.Control
                   as="select"
                   name="position"
-                  value={this.state.position}
+                  selected={this.state.position}
                   onChange={this.handleChange}
-                  required="true"
+                  required={true}
                 >
+                  <option selected={true} hidden={true}></option>
                   <option>Младший дворник</option>
                   <option>Старший охранник</option>
                   <option>Дизайнер</option>
@@ -301,19 +250,30 @@ class App extends Component {
                   type="date"
                   value={this.state.bdate}
                   onChange={this.handleChange}
-                  required="true"
+                  required={true}
                 />
               </Form.Group>
-              <Form.Group controlId="formBasicSex">
-                <Form.Label>Пол</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="sex"
-                  value={this.state.sex}
-                  onChange={this.handleChange}
-                  required="true"
-                />
+              <Form.Group controlId="formBasicDriverSex">
+                <MDBContainer className="mt-5">
+                  <MDBInput
+                    label="Male"
+                    type="radio"
+                    id="radio1"
+                    checked={this.state.sex === "Мужчина" ? true : false}
+                    onChange={this.handleChange}
+                    onClick={this.testGetValue("Мужчина")}
+                  />
+                  <MDBInput
+                    label="Female"
+                    type="radio"
+                    id="radio2"
+                    checked={this.state.sex === "Женщина" ? true : false}
+                    onClick={this.testGetValue("Женщина")}
+                    onChange={this.handleChange}
+                  />
+                </MDBContainer>
               </Form.Group>
+
               <Form.Group controlId="formBasicFDate">
                 <Form.Label>Дата приема на работу</Form.Label>
                 <Form.Control
@@ -321,7 +281,7 @@ class App extends Component {
                   name="fdate"
                   value={this.state.fdate}
                   onChange={this.handleChange}
-                  required="true"
+                  required={true}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicHDate">
@@ -348,36 +308,19 @@ class App extends Component {
               <Button onClick={this.closeSecondModal}>Закрыть</Button>
             </Form>
           </Modal>
-          <Button onClick={this.handleDelete}>Удалить</Button>
 
           <ReactTable
             id="tableQ"
             columns={this.state.columns}
-            data={this.state.posts}
+            data={this.props.data}
+            exportCSV
+            csvFileName="data.csv"
+            style={{display: "flex"}}
           />
         </div>
       </div>
     );
   }
-}
-
-function getNewId() {
-  let allItemsString = JSON.parse(localStorage.getItem("items"));
-  let maxId = 0;
-  allItemsString.forEach((element) => {
-    if (element.id > maxId) {
-      maxId = element.id;
-    }
-  });
-  return ++maxId;
-}
-
-function unselectData() {
-  let allitems = JSON.parse(localStorage.getItem("items"));
-  allitems.forEach((element) => {
-    element.selected = false;
-  });
-  localStorage.setItem("items", JSON.stringify(allitems));
 }
 
 function randomData() {
@@ -399,6 +342,27 @@ function randomData() {
       }
     ])
   );
+}
+
+function getNewId() {
+  let allItemsString = JSON.parse(localStorage.getItem("items"));
+  let maxId = 0;
+  allItemsString.forEach((element) => {
+    if (element.id > maxId) {
+      maxId = element.id;
+    }
+  });
+  return ++maxId;
+}
+
+function unselectData() {
+  if (localStorage.getItem("items") !== "") {
+    let allitems = JSON.parse(localStorage.getItem("items"));
+    allitems.forEach((element) => {
+      element.selected = false;
+    });
+    localStorage.setItem("items", JSON.stringify(allitems));
+  }
 }
 
 render(<App />, document.getElementById("root"));
