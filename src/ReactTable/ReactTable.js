@@ -1,6 +1,6 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-// import { data } from "../data.js";
+import cellEditFactory from "react-bootstrap-table2-editor";
 
 const columns = [
   {
@@ -8,9 +8,8 @@ const columns = [
     text: "id",
     sort: true,
     isKey: true,
-    Cell: ({ original }) => {
-      return <input type="checkbox"></input>;
-    }
+    cellEdit: false
+    
   },
   {
     dataField: "name",
@@ -74,17 +73,17 @@ const defaultSorted = [
 
 //Выделение строк и запись в localStorage.getItem("selected");
 function onSelectRow(row, isChecked, e) {
-  let allstrokes = localStorage.getItem("selected");
   let allitems = JSON.parse(localStorage.getItem("items"));
+
   if (isChecked) {
     allitems.forEach((element) => {
-      if (element.id == row.id) {
+      if (element.id === row.id) {
         element.selected = true;
       }
     });
   } else {
     allitems.forEach((element) => {
-      if (element.id == row.id) {
+      if (element.id === row.id) {
         element.selected = false;
       }
     });
@@ -93,7 +92,6 @@ function onSelectRow(row, isChecked, e) {
 }
 
 function onSelectAllRows(isChecked, row, e) {
-  let allstrokes = localStorage.getItem("selected");
   let allitems = JSON.parse(localStorage.getItem("items"));
   if (isChecked) {
     allitems.forEach((element) => {
@@ -125,11 +123,13 @@ export default class Table extends React.Component {
         keyField="id"
         data={JSON.parse(localStorage.getItem("items"))}
         selectRow={selectRowProp}
+        blurToSave= {true}
+        
         //
         hover={true}
         columns={columns}
         defaultSorted={defaultSorted}
-        // cellEdit={cellEditFactory({ mode: "click" })}
+        cellEdit={cellEditFactory({ mode: "dbclick" })}
         selectableRows // add for checkbox selection
         Clicked
         selectableRowsComponentProps={{ inkDisabled: true }} // optionally, pass Material Ui supported props down to our custom checkbox
@@ -137,3 +137,4 @@ export default class Table extends React.Component {
     );
   }
 }
+

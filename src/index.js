@@ -7,7 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { MDBContainer, MDBInput } from "mdbreact";
-import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -32,6 +31,7 @@ class App extends Component {
     this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleSave = this.handleDelete.bind(this);
   }
 
   handleChange(event) {
@@ -74,7 +74,6 @@ class App extends Component {
   }
   handleOpenEditModal(event) {
     let editStroke = localStorage.getItem("selected");
-    let allstrokes = localStorage.getItem("items");
     if (editStroke !== "") {
       // открытие модального окна
       // присвоение ипутам значения из selected
@@ -95,6 +94,14 @@ class App extends Component {
       icon: "success",
       title: "Успешно!",
       text: "Вы изменили запись!"
+    });
+  }
+  handleSave(event) {
+    this.setState({ SaveTable: true });
+    Swal.fire({
+      icon: "success",
+      title: "Успешно!",
+      text: "Вы сохранили изменения!"
     });
   }
 
@@ -179,23 +186,22 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div class="row ">
-          <h1 class="container" style={{ paddingLeft: "5em" }}>
+        <div>
+          <h1 className="container" style={{ paddingLeft: "5em" }}>
             Тестовое задание <mark>Брылев Е.В.</mark>
           </h1>
         </div>
         <div className="container">
-          <Button onClick={this.openSecondModal} >Добавить запись</Button>
-          <Button onClick={this.handleDelete} >Удалить</Button>
+          <Button onClick={this.openSecondModal}>Добавить запись</Button>
+          <Button onClick={this.handleDelete}>Удалить</Button>
+          <Button onClick={this.handleSave}>Сохранить</Button>
           <Modal
             isOpen={this.state.secondModalIsOpen}
             onRequestClose={this.closeSecondModal}
             ariaHideApp={false}
           >
-            <div>
-              <th>Режим добавления записи</th>
-            </div>
-            
+            <div>Режим добавления записи</div>
+
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formBasicName">
                 <Form.Label>Имя</Form.Label>
@@ -231,11 +237,11 @@ class App extends Component {
                 <Form.Control
                   as="select"
                   name="position"
-                  selected={this.state.position}
+                  value={this.state.position}
                   onChange={this.handleChange}
                   required={true}
                 >
-                  <option selected={true} hidden={true}></option>
+                  <option defaultValue={true} hidden={true}></option>
                   <option>Младший дворник</option>
                   <option>Старший охранник</option>
                   <option>Дизайнер</option>
@@ -315,7 +321,7 @@ class App extends Component {
             data={this.props.data}
             exportCSV
             csvFileName="data.csv"
-            style={{display: "flex"}}
+            style={{ display: "flex" }}
           />
         </div>
       </div>
