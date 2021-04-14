@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "./Form/Form";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -120,14 +121,15 @@ class App extends Component {
             "success"
           );
         }
-      }
-      if (!count) {
-        this.setState({ deletedStroke: false });
-        Swal.fire({
-          icon: "error",
-          title: "Ошибка!",
-          text: "Вы не выбрали строку для удаления!"
-        });
+
+        if (!count) {
+          this.setState({ deletedStroke: false });
+          Swal.fire({
+            icon: "error",
+            title: "Ошибка!",
+            text: "Вы не выбрали строку для удаления!"
+          });
+        }
       }
       this.getItems();
     });
@@ -154,9 +156,15 @@ class App extends Component {
           <h1 className="container" style={{ paddingLeft: "5em" }}></h1>
         </div>
         <div className="container">
-          <Button onClick={this.openSecondModal}>Добавить запись</Button>
-          <Button onClick={this.handleDelete}>Удалить</Button>
-          <Button onClick={this.handleSaveTable}>Сохранить</Button>
+          <ButtonGroup className="mr-2" aria-label="First group">
+            <Button variant="primary" onClick={this.openSecondModal}>
+              Добавить запись
+            </Button>{" "}
+            <Button variant="danger" onClick={this.handleDelete}>
+              Удалить
+            </Button>{" "}
+          </ButtonGroup>
+
           <Modal
             class="modal-dialog modal-lg"
             style={customStyles}
