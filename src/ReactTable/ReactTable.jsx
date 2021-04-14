@@ -14,11 +14,6 @@ function afterSaveCell(oldValue, newValue, row, column) {
   }
   let allitems2 = JSON.stringify(allitems);
   localStorage.setItem("items", allitems2);
-  Swal.fire({
-    icon: "success",
-    title: "Успешно!",
-    text: "Вы изменили запись!"
-  });
 }
 
 function beforeSaveCell(oldValue, newValue, row, column, done) {
@@ -39,6 +34,11 @@ function beforeSaveCell(oldValue, newValue, row, column, done) {
       }
     });
   }, 0);
+  Swal.fire({
+    icon: "success",
+    title: "Успешно!",
+    text: "Вы изменили запись!"
+  });
   return { async: true };
 }
 function onSelectRow(row, isChecked, e) {
