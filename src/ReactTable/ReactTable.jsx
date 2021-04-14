@@ -14,6 +14,11 @@ function afterSaveCell(oldValue, newValue, row, column) {
   }
   let allitems2 = JSON.stringify(allitems);
   localStorage.setItem("items", allitems2);
+  Swal.fire({
+    icon: "success",
+    title: "Успешно!",
+    text: "Вы изменили запись!"
+  });
 }
 
 function beforeSaveCell(oldValue, newValue, row, column, done) {
@@ -34,11 +39,6 @@ function beforeSaveCell(oldValue, newValue, row, column, done) {
       }
     });
   }, 0);
-  Swal.fire({
-    icon: "success",
-    title: "Успешно!",
-    text: "Вы изменили запись!"
-  });
   return { async: true };
 }
 function onSelectRow(row, isChecked, e) {
@@ -85,6 +85,9 @@ const selectRowProp = {
 };
 
 export default class Table extends React.Component {
+  updateItems = () => {
+    this.props.updateItems();
+  };
   render() {
     return (
       <BootstrapTable
@@ -94,6 +97,7 @@ export default class Table extends React.Component {
         data={this.props.data}
         selectRow={selectRowProp}
         //
+
         hover={true}
         columns={columns}
         defaultSorted={defaultSorted}

@@ -1,12 +1,11 @@
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 var today = new Date();
-var firstday = new Date("01.01.1900");
+var firstday = "1900-01-01";
+
 var dd = String(today.getDate()).padStart(2, "0");
 var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 var yyyy = today.getFullYear();
-
 today = yyyy + "-" + mm + "-" + dd;
-firstday = yyyy + "-" + mm + "-" + dd;
 
 export const columns = [
   {
@@ -19,8 +18,7 @@ export const columns = [
   {
     dataField: "name",
     text: "Name",
-    sort: true,
-    validator: (newValue, row, column) => {}
+    sort: true
   },
   {
     dataField: "surname",
@@ -71,8 +69,12 @@ export const columns = [
       type: Type.DATE
     },
     validator: (newValue, row, column) => {
-      if (newValue >= today) {
-        if (newValue <= firstday) {
+      if (newValue <= today) {
+        console.log(newValue);
+        console.log(today);
+        if (newValue >= firstday) {
+          console.log(newValue);
+          console.log(firstday);
           return true;
         } else {
           return {

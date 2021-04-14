@@ -29,7 +29,7 @@ class App extends Component {
     this.setState({ items });
   };
 
-  componentDidMount() {
+  componentDidMount(props) {
     unselectData();
     this.getItems();
   }
@@ -148,10 +148,6 @@ class App extends Component {
   };
 
   render() {
-    // unselectData();
-    // randomData();
-    //если поломаются данные в localstorage стереть // выше
-
     return (
       <div className="App">
         <div>
@@ -174,32 +170,11 @@ class App extends Component {
             />
           </Modal>
 
-          <ReactTable data={this.state.items} />
+          <ReactTable data={this.state.items} updateItems={this.getItems} />
         </div>
       </div>
     );
   }
-}
-
-function randomData() {
-  localStorage.setItem(
-    "items",
-    JSON.stringify([
-      {
-        id: 1,
-        name: "test",
-        surname: "test",
-        lastname: "test",
-        position: "test",
-        bdate: "01.01.1234",
-        sex: "male",
-        fdate: "01.01.2000",
-        hdate: "01.01.2021",
-        drive_l: false,
-        selected: false
-      }
-    ])
-  );
 }
 
 function getNewId() {
