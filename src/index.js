@@ -139,9 +139,7 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <h1 className="container" style={{ paddingLeft: "5em" }}>
-            Название
-          </h1>
+          <h1 className="container" style={{ paddingLeft: "5em" }}></h1>
         </div>
         <div className="container">
           <ButtonGroup className="mr-2" aria-label="First group">
