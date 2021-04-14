@@ -1,6 +1,17 @@
 import React, { useCallback, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { MDBContainer, MDBInput } from "mdbreact";
+import { MDBInput } from "mdbreact";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import {
+  faUserEdit,
+  faUserTie,
+  faUserTimes,
+  faUserCheck,
+  faVenusMars
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+library.add(fab, faUserEdit, faUserTie, faUserCheck, faUserTimes, faVenusMars);
 
 var today = new Date();
 var firstday = "1900-01-01";
@@ -58,7 +69,9 @@ const PersonForm = (props) => {
           controlId="formBasicName"
           style={{ width: "200px" }}
         >
-          <Form.Label>Имя</Form.Label>
+          <Form.Label>
+            <FontAwesomeIcon icon="user-edit" /> Имя
+          </Form.Label>
           <Form.Control
             name="name"
             type="text"
@@ -74,7 +87,9 @@ const PersonForm = (props) => {
           controlId="formBasicSurName"
           style={{ width: "200px" }}
         >
-          <Form.Label>Фамилия</Form.Label>
+          <Form.Label>
+            <FontAwesomeIcon icon="user-edit" /> Фамилия
+          </Form.Label>
           <Form.Control
             name="surname"
             type="text"
@@ -85,7 +100,9 @@ const PersonForm = (props) => {
           />
         </Form.Group>
         <Form.Group controlId="formBasicLastName" style={{ width: "200px" }}>
-          <Form.Label>Отчество</Form.Label>
+          <Form.Label>
+            <FontAwesomeIcon icon="user-edit" /> Отчество
+          </Form.Label>
           <Form.Control
             type="text"
             name="lastname"
@@ -100,7 +117,9 @@ const PersonForm = (props) => {
           controlId="formBasicPosition"
           style={{ width: "200px" }}
         >
-          <Form.Label>Должность</Form.Label>
+          <Form.Label>
+            <FontAwesomeIcon icon="user-tie" /> Должность
+          </Form.Label>
           <Form.Control
             as="select"
             name="position"
@@ -138,6 +157,9 @@ const PersonForm = (props) => {
           className="was-validated"
           noValidate
         >
+          <Form.Label>
+            <FontAwesomeIcon icon="venus-mars" /> Пол
+          </Form.Label>
           <MDBInput
             type="radio"
             id="female"
@@ -168,30 +190,6 @@ const PersonForm = (props) => {
               marginLeft: "-13px"
             }}
           />
-          {/* <MDBInput
-              label="Male"
-              type="radio"
-              id="male"
-              checked={person.sex === "Мужчина" ? true : false}
-              onChange={handleSex}
-              autoComplete="nope"
-              style={{
-                width: "12px",
-                height: "12px",
-                marginLeft: "-13px"
-              }}
-            /> */}
-
-          {/* <MDBInput
-              label="Female"
-              type="radio"
-              id="female"
-              checked={person.sex === "Женщина" ? true : false}
-              onChange={handleSex}
-              autoComplete="nope"
-              style={{ width: "12px", height: "12px", marginLeft: "-13px" }}
-              required
-            /> */}
         </Form.Group>
 
         <Form.Group
@@ -200,7 +198,9 @@ const PersonForm = (props) => {
           controlId="formBasicFDate"
           style={{ width: "200px" }}
         >
-          <Form.Label>Дата приема на работу</Form.Label>
+          <Form.Label>
+            <FontAwesomeIcon icon="user-check" /> Дата приема на работу
+          </Form.Label>
           <Form.Control
             type="date"
             name="fdate"
@@ -212,7 +212,9 @@ const PersonForm = (props) => {
           />
         </Form.Group>
         <Form.Group controlId="formBasicHDate" style={{ width: "200px" }}>
-          <Form.Label>Дата увольнения</Form.Label>
+          <Form.Label>
+            <FontAwesomeIcon icon="user-times" /> Дата увольнения
+          </Form.Label>
           <Form.Control
             type="date"
             name="hdate"
