@@ -8,7 +8,7 @@ import {
   faUserTie,
   faUserTimes,
   faUserCheck,
-  faVenusMars
+  faVenusMars,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 library.add(fab, faUserEdit, faUserTie, faUserCheck, faUserTimes, faVenusMars);
