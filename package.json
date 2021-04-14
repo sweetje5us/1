@@ -2,6 +2,7 @@
   "name": "react-bootstrap-table-forked",
   "description": "test-react-table",
   "version": "0.0.0",
+  "homepage": "https://sweetje5us.github.io/1",
   "dependencies": {
     "@material-ui/core": "4.11.3",
     "@material/checkbox": "10.0.0",
@@ -28,7 +29,6 @@
     "react-table": "7.6.3",
     "sweetalert": "2.1.2",
     "sweetalert2": "10.16.0"
-    
   },
   "devDependencies": {
     "react-scripts": "^4.0.0"
@@ -37,7 +37,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "homepage" : "https://sweetje5us.github.io/1"
+    "eject": "react-scripts eject"
   }
 }
