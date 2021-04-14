@@ -4,6 +4,8 @@ import cellEditFactory from "react-bootstrap-table2-editor";
 import { columns, defaultSorted } from "./constants";
 import Swal from "sweetalert2";
 
+
+
 function afterSaveCell(oldValue, newValue, row, column) {
   let allitems = JSON.parse(localStorage.getItem("items"));
   let stroke = row;

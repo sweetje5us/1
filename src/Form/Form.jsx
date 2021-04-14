@@ -2,6 +2,14 @@ import React, { useCallback, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { MDBContainer, MDBInput } from "mdbreact";
 
+var today = new Date();
+var firstday = "1900-01-01";
+
+var dd = String(today.getDate()).padStart(2, "0");
+var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+var yyyy = today.getFullYear();
+today = yyyy + "-" + mm + "-" + dd;
+
 const PersonForm = (props) => {
   const { onSubmit, onCancel } = props;
   const [person, setPerson] = useState({
@@ -57,6 +65,7 @@ const PersonForm = (props) => {
             required={true}
             value={person.name}
             onChange={handleChange}
+            pattern="[A-Za-zА-Яа-яЁё]{2,20}"
           />
         </Form.Group>
         <Form.Group
@@ -72,6 +81,7 @@ const PersonForm = (props) => {
             value={person.surname}
             onChange={handleChange}
             required={true}
+            pattern="[A-Za-zА-Яа-яЁё]{2,30}"
           />
         </Form.Group>
         <Form.Group controlId="formBasicLastName" style={{ width: "200px" }}>
@@ -81,6 +91,7 @@ const PersonForm = (props) => {
             name="lastname"
             value={person.lastname}
             onChange={handleChange}
+            pattern="[A-Za-zА-Яа-яЁё]{2,30}"
           />
         </Form.Group>
         <Form.Group
@@ -105,12 +116,18 @@ const PersonForm = (props) => {
             <option>Тамада</option>
           </Form.Control>
         </Form.Group>
-        <Form.Group className="was-validated"
-          noValidate controlId="formBasicBirthDate" style={{ width: "200px" }}>
+        <Form.Group
+          className="was-validated"
+          noValidate
+          controlId="formBasicBirthDate"
+          style={{ width: "200px" }}
+        >
           <Form.Label>Дата рождения</Form.Label>
           <Form.Control
             name="bdate"
             type="date"
+            min={firstday}
+            max={today}
             value={person.bdate}
             onChange={handleChange}
             required={true}
@@ -177,12 +194,18 @@ const PersonForm = (props) => {
             /> */}
         </Form.Group>
 
-        <Form.Group className="was-validated"
-          noValidate controlId="formBasicFDate" style={{ width: "200px" }}>
+        <Form.Group
+          className="was-validated"
+          noValidate
+          controlId="formBasicFDate"
+          style={{ width: "200px" }}
+        >
           <Form.Label>Дата приема на работу</Form.Label>
           <Form.Control
             type="date"
             name="fdate"
+            min={firstday}
+            max={today}
             value={person.fdate}
             onChange={handleChange}
             required={true}
@@ -193,7 +216,10 @@ const PersonForm = (props) => {
           <Form.Control
             type="date"
             name="hdate"
+            min={firstday}
+            max={person.fdate}
             value={person.hdate}
+            disabled={!person.fdate}
             onChange={handleChange}
           />
         </Form.Group>
