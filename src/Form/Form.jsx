@@ -44,7 +44,12 @@ const PersonForm = (props) => {
       <h4>Режим добавления записи</h4>
 
       <Form onSubmit={onSubmit(person)}>
-        <Form.Group controlId="formBasicName" style={{ width: "200px" }}>
+        <Form.Group
+          className="was-validated"
+          noValidate
+          controlId="formBasicName"
+          style={{ width: "200px" }}
+        >
           <Form.Label>Имя</Form.Label>
           <Form.Control
             name="name"
@@ -54,7 +59,12 @@ const PersonForm = (props) => {
             onChange={handleChange}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicSurName" style={{ width: "200px" }}>
+        <Form.Group
+          className="was-validated"
+          noValidate
+          controlId="formBasicSurName"
+          style={{ width: "200px" }}
+        >
           <Form.Label>Фамилия</Form.Label>
           <Form.Control
             name="surname"
@@ -73,7 +83,12 @@ const PersonForm = (props) => {
             onChange={handleChange}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicPosition" style={{ width: "200px" }}>
+        <Form.Group
+          className="was-validated"
+          noValidate
+          controlId="formBasicPosition"
+          style={{ width: "200px" }}
+        >
           <Form.Label>Должность</Form.Label>
           <Form.Control
             as="select"
@@ -90,7 +105,8 @@ const PersonForm = (props) => {
             <option>Тамада</option>
           </Form.Control>
         </Form.Group>
-        <Form.Group controlId="formBasicBirthDate" style={{ width: "200px" }}>
+        <Form.Group className="was-validated"
+          noValidate controlId="formBasicBirthDate" style={{ width: "200px" }}>
           <Form.Label>Дата рождения</Form.Label>
           <Form.Control
             name="bdate"
@@ -100,47 +116,69 @@ const PersonForm = (props) => {
             required={true}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicDriverSex" required={true}>
-          <MDBContainer
+        <Form.Group
+          controlId="formBasicDriverSex"
+          className="was-validated"
+          noValidate
+        >
+          <MDBInput
+            type="radio"
+            id="female"
+            name="radio-stacked"
+            selected={person.sex === "Мужчина" ? true : false}
+            onChange={handleSex}
+            required
+            label="Женщина"
+            autoComplete="nope"
             style={{
-              width: "200px",
-              display: "flex",
-              marginLeft: "0",
-              paddingLeft: "0"
+              width: "12px",
+              height: "12px",
+              marginLeft: "-13px"
             }}
-          >
-            <MDBInput
-              key={person.sex}
+          />
+          <MDBInput
+            type="radio"
+            id="male"
+            name="radio-stacked"
+            selected={person.sex === "Женщина" ? true : false}
+            onChange={handleSex}
+            required
+            label="Мужчина"
+            autoComplete="nope"
+            style={{
+              width: "12px",
+              height: "12px",
+              marginLeft: "-13px"
+            }}
+          />
+          {/* <MDBInput
               label="Male"
               type="radio"
               id="male"
               checked={person.sex === "Мужчина" ? true : false}
               onChange={handleSex}
+              autoComplete="nope"
               style={{
                 width: "12px",
                 height: "12px",
                 marginLeft: "-13px"
               }}
-            />
-            <div
-              style={{
-                marginLeft: "10px"
-              }}
-            >
-              <MDBInput
-                key={person.sex}
-                label="Female"
-                type="radio"
-                id="female"
-                checked={person.sex === "Женщина" ? true : false}
-                onChange={handleSex}
-                style={{ width: "12px", height: "12px", marginLeft: "-13px" }}
-              />
-            </div>
-          </MDBContainer>
+            /> */}
+
+          {/* <MDBInput
+              label="Female"
+              type="radio"
+              id="female"
+              checked={person.sex === "Женщина" ? true : false}
+              onChange={handleSex}
+              autoComplete="nope"
+              style={{ width: "12px", height: "12px", marginLeft: "-13px" }}
+              required
+            /> */}
         </Form.Group>
 
-        <Form.Group controlId="formBasicFDate" style={{ width: "200px" }}>
+        <Form.Group className="was-validated"
+          noValidate controlId="formBasicFDate" style={{ width: "200px" }}>
           <Form.Label>Дата приема на работу</Form.Label>
           <Form.Control
             type="date"

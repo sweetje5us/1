@@ -1,3 +1,4 @@
+import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 export const columns = [
   {
     dataField: "id",
@@ -24,33 +25,84 @@ export const columns = [
   {
     dataField: "position",
     text: "Position",
-    sort: true
+    sort: true,
+    editor: {
+      type: Type.SELECT,
+      options: [
+        {
+          value: "Младший дворник",
+          label: "Младший дворник"
+        },
+        {
+          value: "Старший охранник",
+          label: "Старший охранник"
+        },
+        {
+          value: "Дизайнер",
+          label: "Дизайнер"
+        },
+        {
+          value: "Ведущий специалист",
+          label: "Ведущий специалист"
+        },
+        {
+          value: "Тамада",
+          label: "Тамада"
+        }
+      ]
+    }
   },
   {
     dataField: "bdate",
     text: "Birth Date",
     sort: true,
-    value: Date
+    value: Date,
+    editor: {
+      type: Type.DATE
+    }
   },
   {
     dataField: "sex",
     text: "Sex",
-    sort: true
+    sort: true,
+    editor: {
+      type: Type.SELECT,
+      options: [
+        {
+          value: "Мужчина",
+          label: "Мужчина"
+        },
+        {
+          value: "Женщина",
+          label: "Женщина"
+        }
+      ]
+    }
   },
   {
     dataField: "fdate",
     text: "FDate",
-    sort: true
+    sort: true,
+    editor: {
+      type: Type.DATE
+    }
   },
   {
     dataField: "hdate",
     text: "Hdate",
-    sort: true
+    sort: true,
+    editor: {
+      type: Type.DATE
+    }
   },
   {
     dataField: "drive_l",
     text: "Driver Licence",
-    sort: true
+    sort: true,
+    editor: {
+      type: Type.CHECKBOX,
+      value: "true:false"
+    }
   },
   {
     dataField: "selected",
