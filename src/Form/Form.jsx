@@ -50,6 +50,7 @@ const PersonForm = (props) => {
     setPerson((person) => {
       const target = event.target;
       const value = target.type === "checkbox" ? target.checked : target.value;
+      const value1 = target.value === "true" ? "Да" : "Нет";
       const name = target.name;
 
       return {
@@ -241,7 +242,7 @@ const PersonForm = (props) => {
           <Form.Check
             type="checkbox"
             name="drive_l"
-            label="Driver Licence"
+            label="Наличие прав"
             checked={person.drive_l}
             onChange={handleChange}
             inline

@@ -163,11 +163,11 @@ export const columns = [
   },
   {
     dataField: "drive_l",
-    text: "Driver Licence",
+    text: "Наличие прав",
     sort: true,
     editor: {
       type: Type.CHECKBOX,
-      value: "Да:Нет"
+      value: "true:false"
     }
   },
   {
