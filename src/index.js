@@ -7,6 +7,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "./Form/Form";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faUserPlus, faUserMinus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+library.add(fab, faUserPlus, faUserMinus);
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -158,10 +163,10 @@ class App extends Component {
         <div className="container">
           <ButtonGroup className="mr-2" aria-label="First group">
             <Button variant="primary" onClick={this.openSecondModal}>
-              Добавить запись
+              <FontAwesomeIcon icon="user-plus" /> Добавить запись
             </Button>{" "}
             <Button variant="danger" onClick={this.handleDelete}>
-              Удалить
+              <FontAwesomeIcon icon="user-minus" /> Удалить
             </Button>{" "}
           </ButtonGroup>
 
