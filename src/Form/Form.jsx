@@ -9,9 +9,18 @@ import {
   faUserTimes,
   faUserCheck,
   faVenusMars,
+  faBirthdayCake
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-library.add(fab, faUserEdit, faUserTie, faUserCheck, faUserTimes, faVenusMars);
+library.add(
+  fab,
+  faUserEdit,
+  faUserTie,
+  faUserCheck,
+  faUserTimes,
+  faVenusMars,
+  faBirthdayCake
+);
 
 var today = new Date();
 var firstday = "1900-01-01";
@@ -141,7 +150,9 @@ const PersonForm = (props) => {
           controlId="formBasicBirthDate"
           style={{ width: "200px" }}
         >
-          <Form.Label>Дата рождения</Form.Label>
+          <Form.Label>
+            <FontAwesomeIcon icon="birthday-cake" /> Дата рождения
+          </Form.Label>
           <Form.Control
             name="bdate"
             type="date"

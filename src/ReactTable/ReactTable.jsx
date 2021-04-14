@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 function afterSaveCell(oldValue, newValue, row, column) {
   let allitems = JSON.parse(localStorage.getItem("items"));
   let stroke = row;
-  for (i = 0; i < allitems.length; i++) {
-    if (allitems[i].id == stroke.id) {
+  for (let i = 0; i < allitems.length; i++) {
+    if (allitems[i].id === stroke.id) {
       allitems[i] = stroke;
     }
   }
@@ -106,7 +106,6 @@ export default class Table extends React.Component {
           beforeSaveCell,
           afterSaveCell
         })}
-        blurToSave={true}
         selectableRows // add for checkbox selection
         Clicked
         selectableRowsComponentProps={{ inkDisabled: true }} // optionally, pass Material Ui supported props down to our custom checkbox

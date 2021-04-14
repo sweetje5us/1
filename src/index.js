@@ -6,12 +6,18 @@ import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import Form from "./Form/Form";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { faUserPlus, faUserMinus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserPlus,
+  faUserMinus,
+  faUserEdit
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-library.add(fab, faUserPlus, faUserMinus);
+library.add(fab, faUserPlus, faUserMinus, faUserEdit);
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -19,7 +25,6 @@ class App extends Component {
   state = {
     items: []
   };
-
   getItems = () => {
     let items;
     try {
@@ -41,23 +46,9 @@ class App extends Component {
   }
 
   handleSubmit = (person) => (event) => {
-    // let rowArray = {
-    //   id: getNewId(),
-    //   name: this.state.name,
-    //   surname: this.state.surname,
-    //   lastname: this.state.lastname,
-    //   position: this.state.position,
-    //   bdate: this.state.bdate,
-    //   sex: String(this.state.sex),
-    //   fdate: this.state.fdate,
-    //   hdate: this.state.hdate,
-    //   drive_l: Boolean(this.state.drive_l),
-    //   selected: Boolean(this.state.selected)
-    // };
-
     let rowArray = {
       ...person,
-      drive_l: Boolean(person.drive_l),
+      drive_l: person.drive_l,
       selected: Boolean(person.selected),
       id: person.id ? person.id : getNewId()
     };
@@ -75,16 +66,6 @@ class App extends Component {
     this.closeSecondModal();
     this.getItems();
     event.preventDefault();
-  };
-
-  handleSaveTable = (event) => {
-    console.log(table.textContent);
-    // this.setState({ SaveTable: true });
-    // Swal.fire({
-    //   icon: "success",
-    //   title: "Успешно!",
-    //   text: "Вы сохранили изменения!"
-    // });
   };
 
   handleDelete = (event) => {
@@ -158,16 +139,36 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <h1 className="container" style={{ paddingLeft: "5em" }}></h1>
+          <h1 className="container" style={{ paddingLeft: "5em" }}>
+            Название
+          </h1>
         </div>
         <div className="container">
           <ButtonGroup className="mr-2" aria-label="First group">
             <Button variant="primary" onClick={this.openSecondModal}>
               <FontAwesomeIcon icon="user-plus" /> Добавить запись
-            </Button>{" "}
+            </Button>
             <Button variant="danger" onClick={this.handleDelete}>
               <FontAwesomeIcon icon="user-minus" /> Удалить
-            </Button>{" "}
+            </Button>
+            <OverlayTrigger
+              overlay={
+                <Tooltip id="tooltip-disabled" style={{ margin: "0" }}>
+                  Дважды щелкните на ячейке таблицы. Для сохранения нажмите
+                  Enter.
+                </Tooltip>
+              }
+            >
+              <span className="d-inline-block">
+                <Button
+                  variant="primary"
+                  disabled
+                  style={{ pointerEvents: "none" }}
+                >
+                  <FontAwesomeIcon icon="user-edit" /> Редактировать
+                </Button>
+              </span>
+            </OverlayTrigger>
           </ButtonGroup>
 
           <Modal

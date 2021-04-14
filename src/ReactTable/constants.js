@@ -1,4 +1,4 @@
-import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
+import { Type } from "react-bootstrap-table2-editor";
 var today = new Date();
 var firstday = "1900-01-01";
 
@@ -17,22 +17,22 @@ export const columns = [
   },
   {
     dataField: "name",
-    text: "Name",
+    text: "Имя",
     sort: true
   },
   {
     dataField: "surname",
-    text: "SurName",
+    text: "Фамилия",
     sort: true
   },
   {
     dataField: "lastname",
-    text: "Last Name",
+    text: "Отчество",
     sort: true
   },
   {
     dataField: "position",
-    text: "Position",
+    text: "Должность",
     sort: true,
     editor: {
       type: Type.SELECT,
@@ -62,7 +62,7 @@ export const columns = [
   },
   {
     dataField: "bdate",
-    text: "Birth Date",
+    text: "Дата рождения",
     sort: true,
     value: Date,
     editor: {
@@ -70,11 +70,7 @@ export const columns = [
     },
     validator: (newValue, row, column) => {
       if (newValue <= today) {
-        console.log(newValue);
-        console.log(today);
         if (newValue >= firstday) {
-          console.log(newValue);
-          console.log(firstday);
           return true;
         } else {
           return {
@@ -92,7 +88,7 @@ export const columns = [
   },
   {
     dataField: "sex",
-    text: "Sex",
+    text: "Пол",
     sort: true,
     editor: {
       type: Type.SELECT,
@@ -110,7 +106,7 @@ export const columns = [
   },
   {
     dataField: "fdate",
-    text: "FDate",
+    text: "Дата приема на работу",
     sort: true,
     editor: {
       type: Type.DATE
@@ -135,7 +131,7 @@ export const columns = [
   },
   {
     dataField: "hdate",
-    text: "Hdate",
+    text: "Дата увольнения",
     sort: true,
     editor: {
       type: Type.DATE
@@ -171,7 +167,7 @@ export const columns = [
     sort: true,
     editor: {
       type: Type.CHECKBOX,
-      value: "true:false"
+      value: "Да:Нет"
     }
   },
   {
