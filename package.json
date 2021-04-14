@@ -1,8 +1,9 @@
 {
   "name": "react-bootstrap-table-forked",
+  "homepage": "https://sweetje5us.github.io/1",
   "description": "test-react-table",
   "version": "0.0.0",
-  "homepage": "https://sweetje5us.github.io/1",
+
   "dependencies": {
     "@material-ui/core": "4.11.3",
     "@material/checkbox": "10.0.0",
@@ -35,6 +36,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
