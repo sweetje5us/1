@@ -1,4 +1,13 @@
 import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
+var today = new Date();
+var firstday = new Date("01.01.1900");
+var dd = String(today.getDate()).padStart(2, "0");
+var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+var yyyy = today.getFullYear();
+
+today = yyyy + "-" + mm + "-" + dd;
+firstday = yyyy + "-" + mm + "-" + dd;
+
 export const columns = [
   {
     dataField: "id",
@@ -10,7 +19,8 @@ export const columns = [
   {
     dataField: "name",
     text: "Name",
-    sort: true
+    sort: true,
+    validator: (newValue, row, column) => {}
   },
   {
     dataField: "surname",
@@ -59,6 +69,23 @@ export const columns = [
     value: Date,
     editor: {
       type: Type.DATE
+    },
+    validator: (newValue, row, column) => {
+      if (newValue <= today) {
+        if (newValue >= firstday) {
+          return true;
+        } else {
+          return {
+            valid: false,
+            message: "выбрана слишком ранняя дата"
+          };
+        }
+      } else {
+        return {
+          valid: false,
+          message: "выбранная дата не может быть позже текущей даты"
+        };
+      }
     }
   },
   {
@@ -85,6 +112,23 @@ export const columns = [
     sort: true,
     editor: {
       type: Type.DATE
+    },
+    validator: (newValue, row, column) => {
+      if (newValue <= today) {
+        if (newValue >= firstday) {
+          return true;
+        } else {
+          return {
+            valid: false,
+            message: "выбрана слишком ранняя дата"
+          };
+        }
+      } else {
+        return {
+          valid: false,
+          message: "выбранная дата не может быть позже текущей даты"
+        };
+      }
     }
   },
   {
@@ -93,6 +137,30 @@ export const columns = [
     sort: true,
     editor: {
       type: Type.DATE
+    },
+    validator: (newValue, row, column) => {
+      if (newValue >= row.fdate) {
+        if (newValue <= today) {
+          if (newValue >= firstday) {
+            return true;
+          } else {
+            return {
+              valid: false,
+              message: "выбрана слишком ранняя дата"
+            };
+          }
+        } else {
+          return {
+            valid: false,
+            message: "выбранная дата не может быть позже текущей даты"
+          };
+        }
+      } else {
+        return {
+          valid: false,
+          message: "дата увольнения не может быть ранее даты приема"
+        };
+      }
     }
   },
   {
