@@ -178,10 +178,12 @@ class App extends Component {
             onRequestClose={this.closeSecondModal}
             ariaHideApp={false}
           >
-            <Form
-              onSubmit={this.handleSubmit}
-              onCancel={this.closeSecondModal}
-            />
+            <div className="scrollbar scrollbar-primary">
+              <Form
+                onSubmit={this.handleSubmit}
+                onCancel={this.closeSecondModal}
+              />
+            </div>
           </Modal>
 
           <ReactTable data={this.state.items} updateItems={this.getItems} />
