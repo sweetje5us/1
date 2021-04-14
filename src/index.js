@@ -1,67 +1,59 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import ReactTable, { Table } from "./ReactTable/ReactTable";
+import ReactTable from "./ReactTable/ReactTable";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { MDBContainer, MDBInput } from "mdbreact";
-import "./index.css";
+import Form from "./Form/Form";
 
 import "react-datepicker/dist/react-datepicker.css";
-import BootstrapTable from "react-bootstrap-table-next";
 
 class App extends Component {
-  state = {};
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: "",
-      name: "",
-      surname: "",
-      lastname: "",
-      position: "",
-      bdate: "",
-      sex: "",
-      fdate: "",
-      hdate: "",
-      drive_l: ""
-    };
+  state = {
+    items: []
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleSaveTable = this.handleSaveTable.bind(this);
+  getItems = () => {
+    let items;
+    try {
+      items = JSON.parse(localStorage.getItem("items"));
+    } catch (e) {
+      console.error(e.message);
+    }
+
+    if (!Array.isArray(items)) {
+      items = [];
+      localStorage.setItem("items", JSON.stringify(items));
+    }
+    this.setState({ items });
+  };
+
+  componentDidMount() {
+    unselectData();
+    this.getItems();
   }
 
-  handleChange(event) {
-    this.setState((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value
-    }));
-  }
-  handleChangeCheckbox(event) {
-    this.setState((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.checked
-    }));
-  }
+  handleSubmit = (person) => (event) => {
+    // let rowArray = {
+    //   id: getNewId(),
+    //   name: this.state.name,
+    //   surname: this.state.surname,
+    //   lastname: this.state.lastname,
+    //   position: this.state.position,
+    //   bdate: this.state.bdate,
+    //   sex: String(this.state.sex),
+    //   fdate: this.state.fdate,
+    //   hdate: this.state.hdate,
+    //   drive_l: Boolean(this.state.drive_l),
+    //   selected: Boolean(this.state.selected)
+    // };
 
-  handleSubmit(event) {
     let rowArray = {
-      id: getNewId(),
-      name: this.state.name,
-      surname: this.state.surname,
-      lastname: this.state.lastname,
-      position: this.state.position,
-      bdate: this.state.bdate,
-      sex: String(this.state.sex),
-      fdate: this.state.fdate,
-      hdate: this.state.hdate,
-      drive_l: Boolean(this.state.drive_l),
-      selected: Boolean(this.state.selected)
+      ...person,
+      drive_l: Boolean(person.drive_l),
+      selected: Boolean(person.selected),
+      id: person.id ? person.id : getNewId()
     };
 
     let stroke = JSON.stringify(rowArray) + `]`;
@@ -73,17 +65,13 @@ class App extends Component {
     stroke = stroke.replace("}{", "},{");
     localStorage.setItem("items", stroke);
     unselectData();
-  }
 
-  handleChangeRow(event) {
-    this.setState({ changeRow: true });
-    Swal.fire({
-      icon: "success",
-      title: "Успешно!",
-      text: "Вы изменили запись!"
-    });
-  }
-  handleSaveTable(event) {
+    this.closeSecondModal();
+    this.getItems();
+    event.preventDefault();
+  };
+
+  handleSaveTable = (event) => {
     console.log(table.textContent);
     // this.setState({ SaveTable: true });
     // Swal.fire({
@@ -91,9 +79,9 @@ class App extends Component {
     //   title: "Успешно!",
     //   text: "Вы сохранили изменения!"
     // });
-  }
+  };
 
-  handleDelete(event) {
+  handleDelete = (event) => {
     Swal.fire({
       title: "Вы уверены?",
       text: "Записи будут удалены из таблицы!",
@@ -115,7 +103,7 @@ class App extends Component {
           localStorage.setItem("items", JSON.stringify(allitems));
         });
 
-        if (allitems === "") {
+        if (!allitems?.length) {
           // localStorage.setItem("items", allitems);
           this.setState({ deletedStroke: true });
           Swal.fire({
@@ -133,7 +121,7 @@ class App extends Component {
           );
         }
       }
-      if (count === 0) {
+      if (!count) {
         this.setState({ deletedStroke: false });
         Swal.fire({
           icon: "error",
@@ -141,8 +129,9 @@ class App extends Component {
           text: "Вы не выбрали строку для удаления!"
         });
       }
+      this.getItems();
     });
-  }
+  };
 
   openSecondModal = () => {
     this.setState({ secondModalIsOpen: true });
@@ -159,8 +148,8 @@ class App extends Component {
   };
 
   render() {
-    unselectData();
-    //randomData();
+    // unselectData();
+    // randomData();
     //если поломаются данные в localstorage стереть // выше
 
     return (
@@ -179,140 +168,13 @@ class App extends Component {
             onRequestClose={this.closeSecondModal}
             ariaHideApp={false}
           >
-            <div>Режим добавления записи</div>
-
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Group controlId="formBasicName" style={{ width: "200px" }}>
-                <Form.Label>Имя</Form.Label>
-                <Form.Control
-                  name="name"
-                  type="text"
-                  required={true}
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
-              <Form.Group
-                controlId="formBasicSurName"
-                style={{ width: "200px" }}
-              >
-                <Form.Label>Фамилия</Form.Label>
-                <Form.Control
-                  name="surname"
-                  type="text"
-                  value={this.state.surname}
-                  onChange={this.handleChange}
-                  required={true}
-                />
-              </Form.Group>
-              <Form.Group
-                controlId="formBasicLastName"
-                style={{ width: "200px" }}
-              >
-                <Form.Label>Отчество</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="lastname"
-                  value={this.state.lastname}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
-              <Form.Group
-                controlId="formBasicPosition"
-                style={{ width: "200px" }}
-              >
-                <Form.Label>Должность</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="position"
-                  value={this.state.position}
-                  onChange={this.handleChange}
-                  required={true}
-                >
-                  <option defaultValue={true} hidden={true}></option>
-                  <option>Младший дворник</option>
-                  <option>Старший охранник</option>
-                  <option>Дизайнер</option>
-                  <option>Ведущий специалист</option>
-                  <option>Тамада</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group
-                controlId="formBasicBirthDate"
-                style={{ width: "200px" }}
-              >
-                <Form.Label>Дата рождения</Form.Label>
-                <Form.Control
-                  name="bdate"
-                  type="date"
-                  value={this.state.bdate}
-                  onChange={this.handleChange}
-                  required={true}
-                />
-              </Form.Group>
-              <Form.Group controlId="formBasicDriverSex">
-                <MDBContainer className="mt-5" style={{ width: "200px" }}>
-                  <MDBInput
-                    label="Male"
-                    type="radio"
-                    id="radio1"
-                    checked={this.state.sex === "Мужчина" ? true : false}
-                    onChange={this.handleChange}
-                    onClick={this.testGetValue("Мужчина")}
-                    style={{ width: "12px", height: "12px" }}
-                  />
-                  <MDBInput
-                    label="Female"
-                    type="radio"
-                    id="radio2"
-                    checked={this.state.sex === "Женщина" ? true : false}
-                    onClick={this.testGetValue("Женщина")}
-                    onChange={this.handleChange}
-                    style={{ width: "12px", height: "12px" }}
-                  />
-                </MDBContainer>
-              </Form.Group>
-
-              <Form.Group controlId="formBasicFDate" style={{ width: "200px" }}>
-                <Form.Label>Дата приема на работу</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="fdate"
-                  value={this.state.fdate}
-                  onChange={this.handleChange}
-                  required={true}
-                />
-              </Form.Group>
-              <Form.Group controlId="formBasicHDate" style={{ width: "200px" }}>
-                <Form.Label>Дата увольнения</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="hdate"
-                  value={this.state.hdate}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="formBasicDriverLicence">
-                <Form.Check
-                  type="checkbox"
-                  name="drive_l"
-                  label="Driver Licence"
-                  checked={this.state.drive_l}
-                  onChange={this.handleChangeCheckbox}
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Добавить
-              </Button>
-              <Button onClick={this.closeSecondModal}>Закрыть</Button>
-            </Form>
+            <Form
+              onSubmit={this.handleSubmit}
+              onCancel={this.closeSecondModal}
+            />
           </Modal>
 
-          <ReactTable
-            id="tableQ"
-            columns={this.state.columns}
-            data={this.props.data}
-          />
+          <ReactTable data={this.state.items} />
         </div>
       </div>
     );
@@ -352,15 +214,27 @@ function getNewId() {
 }
 
 function unselectData() {
-  if (localStorage.getItem("items") !== "") {
-    let allitems = JSON.parse(localStorage.getItem("items"));
-    allitems.forEach((element) => {
-      element.selected = false;
-    });
-    localStorage.setItem("items", JSON.stringify(allitems));
+  const storageItems = localStorage.getItem("items");
+
+  if (storageItems) {
+    try {
+      let allitems = JSON.parse(storageItems);
+      if (Array.isArray(allitems)) {
+        allitems.forEach((element) => {
+          element.selected = false;
+        });
+        localStorage.setItem("items", JSON.stringify(allitems));
+      }
+    } catch (e) {
+      console.error(e.message);
+    }
   }
 }
 const customStyles = {
+  overlay: {
+    display: "flex",
+    justifyContent: "center"
+  },
   content: {
     width: "300px",
     background: "white",
@@ -370,7 +244,9 @@ const customStyles = {
     filter: "blur(2)",
     transform: "scale(1)",
     opacity: "1",
-    visibility: "visible"
+    visibility: "visible",
+    maxHeight: "90%",
+    inset: "5% auto auto"
   }
 };
 render(<App />, document.getElementById("root"));

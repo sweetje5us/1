@@ -1,74 +1,7 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
-
-const columns = [
-  {
-    dataField: "id",
-    text: "id",
-    sort: true,
-    isKey: true,
-    cellEdit: false
-  },
-  {
-    dataField: "name",
-    text: "Name",
-    sort: true
-  },
-  {
-    dataField: "surname",
-    text: "SurName",
-    sort: true
-  },
-  {
-    dataField: "lastname",
-    text: "Last Name",
-    sort: true
-  },
-  {
-    dataField: "position",
-    text: "Position",
-    sort: true
-  },
-  {
-    dataField: "bdate",
-    text: "Birth Date",
-    sort: true,
-    value: Date
-  },
-  {
-    dataField: "sex",
-    text: "Sex",
-    sort: true
-  },
-  {
-    dataField: "fdate",
-    text: "FDate",
-    sort: true
-  },
-  {
-    dataField: "hdate",
-    text: "Hdate",
-    sort: true
-  },
-  {
-    dataField: "drive_l",
-    text: "Driver Licence",
-    sort: true
-  },
-  {
-    dataField: "selected",
-    text: "Selected",
-    sort: true,
-    hidden: true
-  }
-];
-const defaultSorted = [
-  {
-    dataField: "id",
-    order: "asc"
-  }
-];
+import { columns, defaultSorted } from "./constants";
 
 //Выделение строк и запись в localStorage.getItem("selected");
 function onSelectRow(row, isChecked, e) {
@@ -121,7 +54,7 @@ export default class Table extends React.Component {
         id="table"
         bootstrap4
         keyField="id"
-        data={JSON.parse(localStorage.getItem("items"))}
+        data={this.props.data}
         selectRow={selectRowProp}
         //
         hover={true}
