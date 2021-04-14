@@ -216,8 +216,8 @@ const PersonForm = (props) => {
           <Form.Control
             type="date"
             name="hdate"
-            min={firstday}
-            max={person.fdate}
+            min={person.fdate}
+            max={today}
             value={person.hdate}
             disabled={!person.fdate}
             onChange={handleChange}
