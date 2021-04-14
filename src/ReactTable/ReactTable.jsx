@@ -17,7 +17,7 @@ function afterSaveCell(oldValue, newValue, row, column) {
   Swal.fire({
     icon: "success",
     title: "Успешно!",
-    text: "Вы изменили запись!"
+    text: "Запись будет изменена через несколько секунд!"
   });
 }
 
