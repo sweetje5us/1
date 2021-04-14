@@ -71,8 +71,8 @@ export const columns = [
       type: Type.DATE
     },
     validator: (newValue, row, column) => {
-      if (newValue <= today) {
-        if (newValue >= firstday) {
+      if (newValue >= today) {
+        if (newValue <= firstday) {
           return true;
         } else {
           return {

@@ -2,8 +2,45 @@ import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
 import { columns, defaultSorted } from "./constants";
+import Swal from "sweetalert2";
 
-//Выделение строк и запись в localStorage.getItem("selected");
+function afterSaveCell(oldValue, newValue, row, column) {
+  let allitems = JSON.parse(localStorage.getItem("items"));
+  let stroke = row;
+  for (i = 0; i < allitems.length; i++) {
+    if (allitems[i].id == stroke.id) {
+      allitems[i] = stroke;
+    }
+  }
+  let allitems2 = JSON.stringify(allitems);
+  localStorage.setItem("items", allitems2);
+  Swal.fire({
+    icon: "success",
+    title: "Успешно!",
+    text: "Вы изменили запись!"
+  });
+}
+
+function beforeSaveCell(oldValue, newValue, row, column, done) {
+  setTimeout(() => {
+    Swal.fire({
+      title: "Вы уверены что хотите внести изменения?",
+      text: "Запись будет изменена",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Да, изменить запись!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        done(true);
+      } else {
+        done(false);
+      }
+    });
+  }, 0);
+  return { async: true };
+}
 function onSelectRow(row, isChecked, e) {
   let allitems = JSON.parse(localStorage.getItem("items"));
 
@@ -60,7 +97,11 @@ export default class Table extends React.Component {
         hover={true}
         columns={columns}
         defaultSorted={defaultSorted}
-        cellEdit={cellEditFactory({ mode: "dbclick" })}
+        cellEdit={cellEditFactory({
+          mode: "dbclick",
+          beforeSaveCell,
+          afterSaveCell
+        })}
         blurToSave={true}
         selectableRows // add for checkbox selection
         Clicked

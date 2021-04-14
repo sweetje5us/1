@@ -249,4 +249,5 @@ const customStyles = {
     inset: "5% auto auto"
   }
 };
+
 render(<App />, document.getElementById("root"));
