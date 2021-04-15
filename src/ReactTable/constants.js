@@ -1,7 +1,7 @@
 import { Type } from "react-bootstrap-table2-editor";
 var today = new Date();
 var firstday = "1900-01-01";
-
+var pattern = new RegExp(/[а-я-А-Я-a-z-A-Z]{2,20}/);
 var dd = String(today.getDate()).padStart(2, "0");
 var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
 var yyyy = today.getFullYear();
@@ -22,7 +22,16 @@ export const columns = [
     validator: (newValue, row, column) => {
       if (newValue.length >= 2) {
         if (newValue.length < 20) {
-          return true;
+          if (newValue.match(pattern)) {
+            return true;
+          } else {
+            console.log(pattern);
+            console.log(newValue);
+            return {
+              valid: false,
+              message: "Неверные символы в строке"
+            };
+          }
         } else {
           return {
             valid: false,
@@ -44,7 +53,14 @@ export const columns = [
     validator: (newValue, row, column) => {
       if (newValue.length >= 2) {
         if (newValue.length < 20) {
-          return true;
+          if (newValue.match(pattern)) {
+            return true;
+          } else {
+            return {
+              valid: false,
+              message: "Неверные символы в строке"
+            };
+          }
         } else {
           return {
             valid: false,
@@ -66,7 +82,14 @@ export const columns = [
     validator: (newValue, row, column) => {
       if (newValue.length >= 2) {
         if (newValue.length < 20) {
-          return true;
+          if (newValue.match(pattern)) {
+            return true;
+          } else {
+            return {
+              valid: false,
+              message: "Неверные символы в строке"
+            };
+          }
         } else {
           return {
             valid: false,
