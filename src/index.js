@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import ReactTable from "./ReactTable/ReactTable";
+import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,8 +19,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 library.add(fab, faUserPlus, faUserMinus, faUserEdit);
-
-import "react-datepicker/dist/react-datepicker.css";
 
 class App extends Component {
   state = {
