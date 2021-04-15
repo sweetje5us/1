@@ -4,6 +4,7 @@ import cellEditFactory from "react-bootstrap-table2-editor";
 import { columns, defaultSorted } from "./constants";
 import Swal from "sweetalert2";
 
+// сохранение изменений при редактировании
 function afterSaveCell(oldValue, newValue, row, column) {
   let allitems = JSON.parse(localStorage.getItem("items"));
   let stroke = row;
@@ -20,18 +21,18 @@ function afterSaveCell(oldValue, newValue, row, column) {
     text: "Запись будет изменена через несколько секунд!"
   });
 }
-
+// контроль на внесение изменений перед сохранением
 function beforeSaveCell(oldValue, newValue, row, column, done) {
   setTimeout(() => {
-    if (confirm("Do you want to accep this change?")) {
-      done(true); // contine to save the changes
+    if (confirm("Вы действительно хотите внести изменения?")) {
+      done(true);
     } else {
-      done(false); // reject the changes
+      done(false);
     }
   }, 0);
   return { async: true };
 }
-
+// изменение selected = true при выборе чекбокса
 function onSelectRow(row, isChecked, e) {
   let allitems = JSON.parse(localStorage.getItem("items"));
 
@@ -50,7 +51,7 @@ function onSelectRow(row, isChecked, e) {
   }
   localStorage.setItem("items", JSON.stringify(allitems));
 }
-
+// изменение selected = true при выборе ВСЕХ чекбоксов
 function onSelectAllRows(isChecked, row, e) {
   let allitems = JSON.parse(localStorage.getItem("items"));
   if (isChecked) {

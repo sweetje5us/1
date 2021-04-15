@@ -45,12 +45,12 @@ const PersonForm = (props) => {
     hdate: "",
     drive_l: ""
   });
-
+  //получаем значение input'ов
   const handleChange = useCallback((event) => {
     setPerson((person) => {
       const target = event.target;
       const value = target.type === "checkbox" ? target.checked : target.value;
-      const value1 = target.value === "true" ? "Да" : "Нет";
+
       const name = target.name;
 
       return {
@@ -59,7 +59,7 @@ const PersonForm = (props) => {
       };
     });
   }, []);
-
+  //получаем значение radio
   const handleSex = useCallback((event) => {
     setPerson((person) => {
       return {

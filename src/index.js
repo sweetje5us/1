@@ -25,6 +25,7 @@ class App extends Component {
   state = {
     items: []
   };
+  // начитывание элементов в таблицу
   getItems = (props) => {
     let items;
     try {
@@ -39,12 +40,12 @@ class App extends Component {
     }
     this.setState({ items });
   };
-
+  //начитывание элементов в таблицу при первой загрузке\перезагрузке
   componentDidMount(props) {
     unselectData();
     this.getItems();
   }
-
+  //Занесение данных из формы
   handleSubmit = (person) => (event) => {
     let rowArray = {
       ...person,
@@ -65,9 +66,10 @@ class App extends Component {
 
     this.closeSecondModal();
     this.getItems();
-    event.preventDefault();
+    event.preventDefault(); //отмена действия браузера, т.е. обновления страницы
   };
 
+  //удаление выбранных строк
   handleDelete = (event) => {
     Swal.fire({
       title: "Вы уверены?",
@@ -120,15 +122,15 @@ class App extends Component {
       this.getItems();
     });
   };
-
+  //вызов и закрытие модального окна
   openSecondModal = () => {
     this.setState({ secondModalIsOpen: true });
   };
-
   closeSecondModal = () => {
     this.setState({ secondModalIsOpen: false });
     unselectData();
   };
+
   testGetValue = (value) => () => {
     this.setState({
       sex: value
@@ -192,7 +194,7 @@ class App extends Component {
     );
   }
 }
-
+//назначение id строки
 function getNewId() {
   let allItemsString = JSON.parse(localStorage.getItem("items"));
   let maxId = 0;
@@ -203,7 +205,7 @@ function getNewId() {
   });
   return ++maxId;
 }
-
+// изменение selected=false при снятии выделения строки
 function unselectData() {
   const storageItems = localStorage.getItem("items");
 
