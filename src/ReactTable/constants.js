@@ -18,17 +18,68 @@ export const columns = [
   {
     dataField: "name",
     text: "Имя",
-    sort: true
+    sort: true,
+    validator: (newValue, row, column) => {
+      if (newValue.length >= 2) {
+        if (newValue.length < 20) {
+          return true;
+        } else {
+          return {
+            valid: false,
+            message: "Количество символов не должно превышать 20"
+          };
+        }
+      } else {
+        return {
+          valid: false,
+          message: "Количество символов не должно быть менее 2"
+        };
+      }
+    }
   },
   {
     dataField: "surname",
     text: "Фамилия",
-    sort: true
+    sort: true,
+    validator: (newValue, row, column) => {
+      if (newValue.length >= 2) {
+        if (newValue.length < 20) {
+          return true;
+        } else {
+          return {
+            valid: false,
+            message: "Количество символов не должно превышать 20"
+          };
+        }
+      } else {
+        return {
+          valid: false,
+          message: "Количество символов не должно быть менее 2"
+        };
+      }
+    }
   },
   {
     dataField: "lastname",
     text: "Отчество",
-    sort: true
+    sort: true,
+    validator: (newValue, row, column) => {
+      if (newValue.length >= 2) {
+        if (newValue.length < 20) {
+          return true;
+        } else {
+          return {
+            valid: false,
+            message: "Количество символов не должно превышать 20"
+          };
+        }
+      } else {
+        return {
+          valid: false,
+          message: "Количество символов не должно быть менее 2"
+        };
+      }
+    }
   },
   {
     dataField: "position",
