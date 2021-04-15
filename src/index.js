@@ -25,7 +25,7 @@ class App extends Component {
   state = {
     items: []
   };
-  getItems = () => {
+  getItems = (props) => {
     let items;
     try {
       items = JSON.parse(localStorage.getItem("items"));
@@ -48,7 +48,7 @@ class App extends Component {
   handleSubmit = (person) => (event) => {
     let rowArray = {
       ...person,
-      drive_l: person.drive_l,
+      drive_l: Boolean(person.drive_l) === true ? "Да" : "Нет",
       selected: Boolean(person.selected),
       id: person.id ? person.id : getNewId()
     };
@@ -139,10 +139,12 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <h1 className="container" style={{ paddingLeft: "5em" }}></h1>
+          <h1 style={{ textAlign: "center" }}>
+            Тестовое задание для GreenData
+          </h1>
         </div>
         <div className="container">
-          <ButtonGroup className="mr-2" aria-label="First group">
+          <ButtonGroup>
             <Button variant="primary" onClick={this.openSecondModal}>
               <FontAwesomeIcon icon="user-plus" /> Добавить запись
             </Button>

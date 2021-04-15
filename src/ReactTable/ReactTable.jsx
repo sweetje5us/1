@@ -23,24 +23,15 @@ function afterSaveCell(oldValue, newValue, row, column) {
 
 function beforeSaveCell(oldValue, newValue, row, column, done) {
   setTimeout(() => {
-    Swal.fire({
-      title: "Вы уверены что хотите внести изменения?",
-      text: "Запись будет изменена",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Да, изменить запись!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        done(true);
-      } else {
-        done(false);
-      }
-    });
+    if (confirm("Do you want to accep this change?")) {
+      done(true); // contine to save the changes
+    } else {
+      done(false); // reject the changes
+    }
   }, 0);
   return { async: true };
 }
+
 function onSelectRow(row, isChecked, e) {
   let allitems = JSON.parse(localStorage.getItem("items"));
 
@@ -101,6 +92,7 @@ export default class Table extends React.Component {
         hover={true}
         columns={columns}
         defaultSorted={defaultSorted}
+        updateItems={this.updateItems}
         cellEdit={cellEditFactory({
           mode: "dbclick",
           beforeSaveCell,

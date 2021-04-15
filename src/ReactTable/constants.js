@@ -167,7 +167,7 @@ export const columns = [
     sort: true,
     editor: {
       type: Type.CHECKBOX,
-      value: "true:false"
+      value: "Да:Нет"
     }
   },
   {
