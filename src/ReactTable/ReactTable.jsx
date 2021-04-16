@@ -73,7 +73,7 @@ const selectRowProp = {
   selected: [0],
   onSelect: onSelectRow,
   onSelectAll: onSelectAllRows,
-  bgColor: "red"
+  bgColor: "lightgreen"
 };
 
 export default class Table extends React.Component {
@@ -95,7 +95,8 @@ export default class Table extends React.Component {
         defaultSorted={defaultSorted}
         updateItems={this.updateItems}
         cellEdit={cellEditFactory({
-          mode: "dbclick",
+          mode: "click",
+          autoSelectText: true,
           beforeSaveCell,
           afterSaveCell
         })}

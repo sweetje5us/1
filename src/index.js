@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import ReactTable from "./ReactTable/ReactTable";
+import BootstrapTable from "react-bootstrap-table-next";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import * as BS from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -139,39 +141,39 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>
-          <h1 style={{ textAlign: "center" }}>
-            Тестовое задание для GreenData
-          </h1>
-        </div>
+        <h1 style={{ textAlign: "center" }}>Тестовое задание для GreenData</h1>
+
+        <div></div>
         <div className="container">
-          <ButtonGroup>
-            <Button variant="primary" onClick={this.openSecondModal}>
+          <ButtonGroup className="pull-left">
+            <Button
+              variant="primary"
+              onClick={this.openSecondModal}
+              style={custombuttons}
+            >
               <FontAwesomeIcon icon="user-plus" /> Добавить запись
             </Button>
-            <Button variant="danger" onClick={this.handleDelete}>
+            <Button
+              variant="danger"
+              onClick={this.handleDelete}
+              style={custombuttons}
+            >
               <FontAwesomeIcon icon="user-minus" /> Удалить
             </Button>
             <OverlayTrigger
               overlay={
                 <Tooltip id="tooltip-disabled" style={{ margin: "0" }}>
-                  Дважды щелкните на ячейке таблицы. Для сохранения нажмите
-                  Enter.
+                  Щелкните на ячейке таблицы. Для сохранения нажмите Enter.
                 </Tooltip>
               }
             >
               <span className="d-inline-block">
-                <Button
-                  variant="primary"
-                  disabled
-                  style={{ pointerEvents: "none" }}
-                >
+                <Button variant="primary" style={custombuttons} disabled>
                   <FontAwesomeIcon icon="user-edit" /> Редактировать
                 </Button>
               </span>
             </OverlayTrigger>
           </ButtonGroup>
-
           <Modal
             class="modal-dialog modal-lg"
             style={customStyles}
@@ -222,6 +224,13 @@ function unselectData() {
     }
   }
 }
+const custombuttons = {
+  marginLeft: "0",
+  marginBottom: "5px",
+  marginRight: "5px",
+  display: "flex"
+};
+
 const customStyles = {
   overlay: {
     display: "flex",

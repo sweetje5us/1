@@ -1,4 +1,5 @@
 import { Type } from "react-bootstrap-table2-editor";
+import Select from "react-select";
 var today = new Date();
 var firstday = "1900-01-01";
 var pattern = new RegExp(/[а-я-А-Я-a-z-A-Z]{2,20}/);
